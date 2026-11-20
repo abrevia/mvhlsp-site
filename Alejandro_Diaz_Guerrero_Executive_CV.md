@@ -29,7 +29,7 @@ Currently serving as **Founder & Director of MVHLSP** (Mountain Valley Healthcar
 ### Founder & Director | MVHLSP (Mountain Valley Healthcare LSP)
 *2024 – Present | Mazatlán, Mexico & Remote US Healthcare*
 * Founded and scaled a specialized Language Service Provider delivering 24/7/365 on-demand Medical Spanish interpreting to healthcare practices, clinics, and hospital systems.
-* Integrated with ProZ Remoto’s enterprise telephony infrastructure, providing instant failover access to a network of 1,000+ certified medical interpreters with sub-30-second connection speeds.
+* Integrated with ProZ Remoto’s enterprise telephony infrastructure, providing instant failover access to a network of 1,000+ certified medical interpreters with direct on-demand connection.
 * Architected a predictable tiered pricing structure ($1.48/min retail with an $0.80/min wholesale cap), securing high operating profit margins while lowering language-access expenses for healthcare facilities.
 
 ### Chief of Operations & Product Manager | Healthcare Messaging & Telehealth Platform
