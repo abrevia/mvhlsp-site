@@ -3,134 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MVHLSP | Clinical Quick-Dial Reference Card</title>
+    <title>MVHLSP | Clinical Quick-Dial & Interactive Dial Pad</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700;800;900&display=swap');
         body {
-            font-family: 'Public Sans', -apple-system, sans-serif;
+            font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             color: #111827;
         }
         @media print {
-            body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+            body { print-color-adjust: exact; -webkit-print-color-adjust: exact; background: white; }
             .no-print { display: none !important; }
+        }
+        .dial-btn:active {
+            transform: scale(0.95);
         }
     </style>
 </head>
 <body class="bg-slate-100 p-4 sm:p-8 flex justify-center items-center min-h-screen">
 
-    <div class="max-w-2xl w-full bg-white border-2 border-[#105C7C] rounded-2xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+    <div class="max-w-xl w-full bg-white border-2 border-[#105C7C] rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+        
         <!-- Top Banner -->
         <div class="flex items-center justify-between border-b-2 border-[#105C7C] pb-4 mb-6">
             <div>
-                <span class="text-xs font-black tracking-widest uppercase text-[#105C7C] bg-cyan-50 px-2.5 py-1 rounded border border-[#105C7C]">
+                <span class="text-[11px] font-black tracking-widest uppercase text-[#105C7C] bg-cyan-50 px-2.5 py-1 rounded border border-[#105C7C]">
                     Clinical Language Access Reference
                 </span>
                 <h1 class="text-2xl sm:text-3xl font-black text-slate-900 mt-2 tracking-tight">
                     MVHLSP Medical Spanish Dispatch
                 </h1>
                 <p class="text-xs font-bold text-slate-600 mt-0.5">
-                    Mountain Valley Healthcare Language Service Provider • 100% Certified Human Interpreters
+                    Mountain Valley Healthcare LSP • Specialized Human Clinical Interpretation
                 </p>
             </div>
             <div class="text-right shrink-0">
-                <span class="inline-block bg-emerald-100 text-emerald-800 text-[11px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider">
-                    ● Sub-15s Connect
+                <span class="inline-block bg-emerald-100 text-emerald-800 text-[11px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider animate-pulse">
+                    ● Live Hotline Active
                 </span>
             </div>
         </div>
 
-        <!-- 3-Step Dialing Instructions -->
-        <div class="space-y-4 mb-6">
-            <h2 class="text-sm font-black uppercase text-slate-700 tracking-wider">
-                Instant Clinical Phone Connection (OPI)
-            </h2>
-
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-center">
-                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-[#105C7C] text-white font-black text-xs mb-1.5">1</span>
-                    <p class="text-xs font-bold text-slate-500 uppercase">Dial Direct Hotline</p>
-                    <p class="text-sm font-black text-slate-900 mt-0.5">Toll-Free Dispatch</p>
-                    <p class="text-[11px] text-slate-600 font-semibold">(Provisioned Line)</p>
-                </div>
-
-                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-center">
-                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-[#105C7C] text-white font-black text-xs mb-1.5">2</span>
-                    <p class="text-xs font-bold text-slate-500 uppercase">Enter Clinic PIN</p>
-                    <p class="text-sm font-black text-[#105C7C] mt-0.5 tracking-widest">####</p>
-                    <p class="text-[11px] text-slate-600 font-semibold">(Instant Auth)</p>
-                </div>
-
-                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-center">
-                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-[#105C7C] text-white font-black text-xs mb-1.5">3</span>
-                    <p class="text-xs font-bold text-slate-500 uppercase">Connect Interpreter</p>
-                    <p class="text-sm font-black text-emerald-700 mt-0.5">&lt; 15 Seconds</p>
-                    <p class="text-[11px] text-slate-600 font-semibold">Certified Human</p>
-                </div>
+        <!-- Interactive Clinical Dial Pad Widget -->
+        <div class="bg-slate-900 rounded-2xl p-6 mb-6 shadow-inner text-white border border-slate-700">
+            <div class="text-center mb-3">
+                <span class="text-[10px] uppercase font-black tracking-widest text-emerald-400 bg-emerald-950/80 px-2.5 py-0.5 rounded border border-emerald-600">
+                    Texas Clinical Direct Line
+                </span>
             </div>
+
+            <!-- Phone Number Display -->
+            <div class="bg-slate-950 border-2 border-emerald-500/50 rounded-xl px-4 py-3 text-center mb-5 shadow-inner flex items-center justify-between">
+                <span class="text-xs font-mono text-slate-500">TEL</span>
+                <input type="text" id="phone-display" value="+1 (915) 339-2353" readonly 
+                       class="bg-transparent text-center font-mono text-xl sm:text-2xl font-black text-emerald-400 tracking-wider focus:outline-none w-full">
+                <button type="button" onclick="resetNumber()" title="Reset to Texas Hotline" class="text-xs text-slate-400 hover:text-white transition px-1">
+                    ↺
+                </button>
+            </div>
+
+            <!-- 1-Tap Big Green Dial Button -->
+            <a id="dial-link" href="tel:+19153392353" 
+               class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black text-base sm:text-lg py-3.5 px-6 rounded-xl shadow-lg flex items-center justify-center gap-3 transition transform hover:scale-[1.02] active:scale-[0.98] mb-5 border border-emerald-400">
+                <svg class="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                </svg>
+                <span>TAP TO DIAL NOW</span>
+            </a>
+
+            <!-- Numeric Keypad Grid (For custom extension / PIN entry) -->
+            <div class="grid grid-cols-3 gap-2.5 max-w-xs mx-auto">
+                <button type="button" onclick="appendDigit('1')" class="dial-btn bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-lg text-lg border border-slate-700 transition">1</button>
+                <button type="button" onclick="appendDigit('2')" class="dial-btn bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-lg text-lg border border-slate-700 transition">2 <span class="text-[9px] block text-slate-400 -mt-1 font-normal">ABC</span></button>
+                <button type="button" onclick="appendDigit('3')" class="dial-btn bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-lg text-lg border border-slate-700 transition">3 <span class="text-[9px] block text-slate-400 -mt-1 font-normal">DEF</span></button>
+                <button type="button" onclick="appendDigit('4')" class="dial-btn bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-lg text-lg border border-slate-700 transition">4 <span class="text-[9px] block text-slate-400 -mt-1 font-normal">GHI</span></button>
+                <button type="button" onclick="appendDigit('5')" class="dial-btn bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-lg text-lg border border-slate-700 transition">5 <span class="text-[9px] block text-slate-400 -mt-1 font-normal">JKL</span></button>
+                <button type="button" onclick="appendDigit('6')" class="dial-btn bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-lg text-lg border border-slate-700 transition">6 <span class="text-[9px] block text-slate-400 -mt-1 font-normal">MNO</span></button>
+                <button type="button" onclick="appendDigit('7')" class="dial-btn bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-lg text-lg border border-slate-700 transition">7 <span class="text-[9px] block text-slate-400 -mt-1 font-normal">PQRS</span></button>
+                <button type="button" onclick="appendDigit('8')" class="dial-btn bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-lg text-lg border border-slate-700 transition">8 <span class="text-[9px] block text-slate-400 -mt-1 font-normal">TUV</span></button>
+                <button type="button" onclick="appendDigit('9')" class="dial-btn bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-lg text-lg border border-slate-700 transition">9 <span class="text-[9px] block text-slate-400 -mt-1 font-normal">WXYZ</span></button>
+                <button type="button" onclick="appendDigit('*')" class="dial-btn bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-lg text-lg border border-slate-700 transition">*</button>
+                <button type="button" onclick="appendDigit('0')" class="dial-btn bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-lg text-lg border border-slate-700 transition">0 <span class="text-[9px] block text-slate-400 -mt-1 font-normal">+</span></button>
+                <button type="button" onclick="appendDigit('#')" class="dial-btn bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-lg text-lg border border-slate-700 transition">#</button>
+            </div>
+
+            <p class="text-center text-[11px] text-slate-400 mt-4">
+                Tap button above to initiate phone call. Serviced directly by Alejandro Díaz Guerrero.
+            </p>
         </div>
 
-        <!-- 15-Minute Free Trial Voucher Box -->
+        <!-- 15-Minute Free Trial Guarantee Banner -->
         <div class="bg-cyan-50 border-2 border-dashed border-[#105C7C] rounded-xl p-4 mb-6">
             <div class="flex items-center justify-between">
                 <div>
                     <span class="text-[10px] font-black uppercase tracking-wider bg-[#105C7C] text-white px-2 py-0.5 rounded">
-                        Authorized Trial Voucher
+                        Authorized Trial
                     </span>
-                    <h3 class="text-base font-black text-slate-900 mt-1">
-                        15 Minutes Complimentary Clinical Interpreting
+                    <h3 class="text-sm font-black text-slate-900 mt-1">
+                        15-Minute Complimentary Clinical Interpreting
                     </h3>
-                    <p class="text-xs font-semibold text-slate-600">
-                        Zero setup fees • No credit card required • Pure per-second billing ($1.48/min afterwards)
+                    <p class="text-[11px] font-semibold text-slate-600">
+                        Zero setup fees • No credit card required • Pure per-second billing ($1.48/min) afterwards
                     </p>
                 </div>
-                <div class="text-right shrink-0 ml-4">
-                    <span class="text-xs font-mono font-black text-[#105C7C] bg-white px-3 py-1.5 rounded-lg border border-[#105C7C] shadow-xs">
-                        TRIAL-MVHLSP15
+                <div class="text-right shrink-0 ml-3">
+                    <span class="text-xs font-mono font-black text-[#105C7C] bg-white px-2.5 py-1 rounded-lg border border-[#105C7C]">
+                        15-MIN TRIAL
                     </span>
                 </div>
-            </div>
-        </div>
-
-        <!-- Web Portal & Video (VRI) Dispatch -->
-        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>
-                <h3 class="text-xs font-black uppercase text-slate-800 tracking-wider">
-                    Web Dispatch & Video Remote Interpreting (VRI)
-                </h3>
-                <p class="text-xs text-slate-600 font-medium mt-0.5">
-                    Access 1-tap browser audio/video dispatch on any tablet, iPad, or workstation:
-                </p>
-                <p class="text-sm font-black text-[#105C7C] mt-1">
-                    https://mvhlsp.site
-                </p>
-            </div>
-            <div class="shrink-0 text-center">
-                <a href="https://mvhlsp.site" target="_blank" class="inline-block bg-[#105C7C] hover:bg-[#156D93] text-white font-bold text-xs px-4 py-2 rounded-lg shadow-sm transition">
-                    Open Web Portal →
-                </a>
             </div>
         </div>
 
         <!-- Compliance & Regulatory Footer -->
         <div class="border-t border-slate-200 pt-4 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 font-semibold gap-2">
             <div class="flex items-center gap-3">
-                <span>✔ HIPAA 45 CFR § 164.504(e) Compliant</span>
-                <span>✔ CMS Fraud, Waste & Abuse Safeguards</span>
+                <span>✔ HIPAA Compliant</span>
+                <span>✔ CMS FWA Safeguards</span>
                 <span>✔ Section 1557 ACA</span>
             </div>
             <div>
-                Verified Portfolio: <a href="https://adg.mvhlsp.site" class="text-[#105C7C] underline font-bold">adg.mvhlsp.site</a>
+                Founder Bio: <a href="https://adg.mvhlsp.site" class="text-[#105C7C] underline font-bold">adg.mvhlsp.site</a>
             </div>
         </div>
 
         <!-- Print Action Button (Hidden during print) -->
-        <div class="mt-6 text-center no-print">
-            <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-md transition cursor-pointer">
-                🖨 Print Front-Desk Card
+        <div class="mt-5 text-center no-print flex items-center justify-center gap-3">
+            <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs px-5 py-2 rounded-xl shadow transition cursor-pointer">
+                🖨 Print Triage Card
             </button>
+            <a href="/" class="text-xs text-slate-600 hover:text-[#105C7C] font-bold py-2 px-3 transition">
+                ← Return to Agency Portal
+            </a>
         </div>
     </div>
+
+    <!-- Dial Pad Logic Script -->
+    <script>
+        const defaultNumber = "+1 (915) 339-2353";
+        const rawDefault = "+19153392353";
+        let isEdited = false;
+
+        function updateDialLink(num) {
+            const clean = num.replace(/[^0-9+*#]/g, '');
+            document.getElementById('dial-link').href = 'tel:' + clean;
+        }
+
+        function appendDigit(digit) {
+            const display = document.getElementById('phone-display');
+            if (!isEdited) {
+                display.value = digit;
+                isEdited = true;
+            } else {
+                display.value += digit;
+            }
+            updateDialLink(display.value);
+        }
+
+        function resetNumber() {
+            const display = document.getElementById('phone-display');
+            display.value = defaultNumber;
+            isEdited = false;
+            updateDialLink(rawDefault);
+        }
+    </script>
 
 </body>
 </html>

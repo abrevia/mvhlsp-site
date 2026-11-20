@@ -643,8 +643,25 @@
             
             <!-- Modal Body (Form View) -->
             <div id="trial-form-container" class="p-6 overflow-y-auto space-y-4 text-xs text-slate-600 leading-relaxed max-h-[70vh]">
+                <!-- 1-Tap Direct Call Bar -->
+                <div class="bg-slate-900 border border-slate-700 text-white p-3.5 rounded-xl flex items-center justify-between gap-3 shadow-md">
+                    <div>
+                        <span class="text-[9px] uppercase font-black text-emerald-400 tracking-wider bg-emerald-950 px-2 py-0.5 rounded border border-emerald-600">Immediate Phone Trial</span>
+                        <p class="text-xs font-black text-white mt-1">Direct Texas Line: (915) 339-2353</p>
+                        <p class="text-[10px] text-slate-400">1-Tap live clinical connect with Alex</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <a href="tel:+19153392353" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs px-4 py-2.5 rounded-lg shadow flex items-center gap-1.5 shrink-0 transition">
+                            📞 Tap to Dial
+                        </a>
+                        <a href="/quickdial" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs px-3 py-2.5 rounded-lg border border-slate-600 shrink-0 transition" title="Open Full Dial Pad">
+                            🔢 Dial Pad
+                        </a>
+                    </div>
+                </div>
+
                 <div class="bg-[#EEF6F9] border border-[#C4DEE9] text-[#105C7C] p-3 rounded-xl text-[11px] leading-relaxed">
-                    <strong>Flexible Clinical Scheduling:</strong> Coordinate upcoming patient procedures, provider onboarding, or evaluate our live clinical standard on a trial encounter (minimum 48h advance notice).
+                    <strong>Flexible Clinical Scheduling:</strong> Or coordinate upcoming patient procedures, provider onboarding, or evaluate our live clinical standard on a trial encounter (minimum 48h advance notice).
                 </div>
 
                 <form id="trial-request-form" onsubmit="handleTrialSubmit(event)" class="space-y-3.5">
