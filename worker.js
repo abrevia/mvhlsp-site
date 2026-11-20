@@ -26,6 +26,16 @@ export default {
       }
     }
 
+    // Clean routing for /partner and /quickdial
+    if (path === '/partner') {
+      const assetReq = new Request('https://mvhlsp.site/partner.html', request);
+      return env.ASSETS.fetch(assetReq);
+    }
+    if (path === '/quickdial') {
+      const assetReq = new Request('https://mvhlsp.site/quickdial.html', request);
+      return env.ASSETS.fetch(assetReq);
+    }
+
     // Default: fetch from static assets
     return env.ASSETS.fetch(request);
   }
