@@ -265,6 +265,38 @@
       font-size: 0.9rem;
     }
     footer a { color: var(--primary-light); text-decoration: none; }
+
+    /* Interactive Dial Pad */
+    .dial-key {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 1.25rem;
+      font-weight: 700;
+      padding: 12px 0;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .dial-key:hover {
+      background: rgba(51, 65, 85, 0.9);
+      border-color: #10b981;
+    }
+    .dial-key:active {
+      transform: scale(0.96);
+      background: #10b981;
+    }
+    .dial-key .sub {
+      font-size: 0.65rem;
+      color: #94a3b8;
+      font-weight: normal;
+      letter-spacing: 0.05em;
+      margin-top: -2px;
+    }
   </style>
 </head>
 <body>
@@ -276,7 +308,8 @@
       </div>
       <nav class="nav-links">
         <a href="https://mvhlsp.site">MVHLSP Agency</a>
-        <a href="https://www.proz.com/remoto/b/mvhlsp" target="_blank">Client Portal</a>
+        <a href="#direct-line" style="color: #34d399; font-weight: 700;">📞 Direct Line</a>
+        <a href="https://www.proz.com/remoto/b/mvhlsp" target="_blank">Remoto Portal</a>
         <a href="mailto:serviciosadg.mx@gmail.com">Contact</a>
       </nav>
     </header>
@@ -294,6 +327,9 @@
         <div class="hero-actions">
           <a href="mailto:serviciosadg.mx@gmail.com?subject=Inquiry for Alejandro Diaz Guerrero" class="btn btn-primary">
             Get in Touch
+          </a>
+          <a href="#direct-line" class="btn btn-secondary" style="border-color: #10b981; color: #34d399;">
+            📞 Direct Line: (915) 339-2353
           </a>
           <a href="https://www.proz.com/remoto/b/mvhlsp" target="_blank" class="btn btn-secondary">
             Visit Remoto Portal
@@ -378,6 +414,91 @@
         </div>
       </div>
     </section>
+
+    <!-- Direct Executive Line & Interactive Dial Pad -->
+    <section id="direct-line" style="margin-bottom: 64px;">
+      <div style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(6, 78, 59, 0.35)); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 20px; padding: 36px 28px; backdrop-filter: blur(16px); max-width: 580px; margin: 0 auto; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); padding: 4px 12px; border-radius: 9999px; font-weight: 800; display: inline-block;">
+            ● Direct Texas Executive Line
+          </span>
+          <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 1.75rem; font-weight: 800; color: #fff; margin-top: 12px; margin-bottom: 6px;">
+            Connect Directly with Alejandro
+          </h2>
+          <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 440px; margin: 0 auto;">
+            Direct phone line for executive advisory, clinical partnerships, language operations, or contacts outside the Remoto medical portal.
+          </p>
+        </div>
+
+        <!-- Phone Display -->
+        <div style="background: #020617; border: 2px solid rgba(16, 185, 129, 0.5); border-radius: 14px; padding: 12px 18px; margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between;">
+          <span style="font-family: monospace; font-size: 0.8rem; color: #64748b; font-weight: bold;">TEL</span>
+          <input type="text" id="phone-display" value="+1 (915) 339-2353" readonly 
+                 style="background: transparent; border: none; text-align: center; font-family: monospace; font-size: 1.35rem; font-weight: 900; color: #34d399; width: 100%; outline: none; letter-spacing: 0.05em;">
+          <button type="button" onclick="resetNumber()" title="Reset to Texas Line" style="background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 1.1rem; padding: 0 4px;">
+            ↺
+          </button>
+        </div>
+
+        <!-- 1-Tap Big Call Button -->
+        <a id="dial-link" href="tel:+19153392353" 
+           style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: linear-gradient(135deg, #059669, #10b981); color: #fff; font-weight: 800; font-size: 1.05rem; padding: 15px; border-radius: 14px; text-decoration: none; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3); transition: transform 0.15s ease;">
+          <svg style="width: 22px; height: 22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+          </svg>
+          <span>TAP TO CALL: (915) 339-2353</span>
+        </a>
+
+        <!-- Numeric Keypad Grid -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 320px; margin: 0 auto 16px;">
+          <button type="button" onclick="appendDigit('1')" class="dial-key">1</button>
+          <button type="button" onclick="appendDigit('2')" class="dial-key">2 <span class="sub">ABC</span></button>
+          <button type="button" onclick="appendDigit('3')" class="dial-key">3 <span class="sub">DEF</span></button>
+          <button type="button" onclick="appendDigit('4')" class="dial-key">4 <span class="sub">GHI</span></button>
+          <button type="button" onclick="appendDigit('5')" class="dial-key">5 <span class="sub">JKL</span></button>
+          <button type="button" onclick="appendDigit('6')" class="dial-key">6 <span class="sub">MNO</span></button>
+          <button type="button" onclick="appendDigit('7')" class="dial-key">7 <span class="sub">PQRS</span></button>
+          <button type="button" onclick="appendDigit('8')" class="dial-key">8 <span class="sub">TUV</span></button>
+          <button type="button" onclick="appendDigit('9')" class="dial-key">9 <span class="sub">WXYZ</span></button>
+          <button type="button" onclick="appendDigit('*')" class="dial-key">*</button>
+          <button type="button" onclick="appendDigit('0')" class="dial-key">0 <span class="sub">+</span></button>
+          <button type="button" onclick="appendDigit('#')" class="dial-key">#</button>
+        </div>
+
+        <p style="text-align: center; font-size: 0.8rem; color: #94a3b8; margin: 0;">
+          Direct line answered by Alejandro Díaz Guerrero. Available for voice calls, SMS, and executive consultations.
+        </p>
+      </div>
+    </section>
+
+    <script>
+      const defaultNumber = "+1 (915) 339-2353";
+      const rawDefault = "+19153392353";
+      let isEdited = false;
+
+      function updateDialLink(num) {
+        const clean = num.replace(/[^0-9+*#]/g, '');
+        document.getElementById('dial-link').href = 'tel:' + clean;
+      }
+
+      function appendDigit(digit) {
+        const display = document.getElementById('phone-display');
+        if (!isEdited) {
+          display.value = digit;
+          isEdited = true;
+        } else {
+          display.value += digit;
+        }
+        updateDialLink(display.value);
+      }
+
+      function resetNumber() {
+        const display = document.getElementById('phone-display');
+        display.value = defaultNumber;
+        isEdited = false;
+        updateDialLink(rawDefault);
+      }
+    </script>
 
     <footer>
       <p>© 2026 Alejandro Díaz Guerrero. All rights reserved. | Founder & Director, <a href="https://mvhlsp.site">MVHLSP</a></p>
