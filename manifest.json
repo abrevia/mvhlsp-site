@@ -1,0 +1,16 @@
+{
+  "name": "MVHLSP - Specialized Medical Spanish Interpreting",
+  "short_name": "MVHLSP",
+  "description": "On-demand clinical Spanish interpreting for healthcare systems. No contracts, per-second billing.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1b5974",
+  "icons": [
+    {
+      "src": "logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

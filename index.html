@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVHLSP | Specialized Medical Spanish Interpreting & Healthcare Language Access</title>
+    <meta name="description" content="MVHLSP provides specialized, HIPAA-compliant Medical Spanish human interpretation (OPI & VRI) for hospitals, clinics, emergency departments, and healthcare systems. Transparent $1.48/min per-second billing with zero contracts.">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="MVHLSP">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="logo.jpg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        clinical: {
+                            navy: '#105C7C',
+                            dark: '#1C1C1C',
+                            blue: '#156D93',
+                            accent: '#0E4B65',
+                            light: '#EEF6F9',
+                            border: '#C4DEE9',
+                            slate: '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #1C1C1C;
+        }
+        /* 89% Grayscale for all primary dark text and headlines */
+        .text-clinical-dark,
+        .text-slate-900,
+        .text-slate-800 {
+            color: #1C1C1C !important;
+        }
+        
+        @keyframes soft-blink {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.88; transform: scale(1.025); }
+        }
+        .btn-pulse-hover:hover {
+            animation: soft-blink 0.65s ease-in-out infinite alternate;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-[#1C1C1C] antialiased selection:bg-[#105C7C] selection:text-white flex flex-col min-h-screen">
+
+    <!-- Main Navigation Bar with Subtle Clinical Teal Trim -->
+    <header class="bg-white border-b border-[#105C7C] sticky top-0 z-50 shadow-xs">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+            <!-- Brand & Entity Name (Logo Scaled -20% + 4-Line Stacked Descriptor Side-by-Side) -->
+            <a href="/" class="group flex items-center gap-2.5 shrink-0">
+                <img src="logo.jpg" alt="MVHLSP" class="h-7 sm:h-[30px] w-auto rounded shadow-2xs object-contain shrink-0">
+                <div class="flex flex-col justify-between text-[8px] sm:text-[8.5px] font-bold text-slate-500 group-hover:text-[#105C7C] tracking-wider uppercase leading-[1.1] transition-colors whitespace-nowrap shrink-0">
+                    <span>Specialized</span>
+                    <span>Medical</span>
+                    <span>Spanish</span>
+                    <span>Interpreting</span>
+                </div>
+            </a>
+
+            <!-- Right-Aligned Navigation & Action Controls -->
+            <div class="flex items-center gap-3 lg:gap-6 justify-end">
+                <!-- Navigation Links (Balanced spacing, clear breathing room from logo) -->
+                <nav class="hidden md:flex items-center space-x-3.5 lg:space-x-4 text-xs font-semibold text-slate-600 whitespace-nowrap ml-4 lg:ml-6">
+                    <a href="#specialties" class="hover:text-[#105C7C] transition">Specialties</a>
+                    <a href="#modalities" class="hover:text-[#105C7C] transition">OPI &amp; VRI</a>
+                    <a href="#model" class="hover:text-[#105C7C] transition">Pay As You Go</a>
+                    <a href="#compliance" class="hover:text-[#105C7C] transition">Compliance</a>
+                </nav>
+
+                <!-- Top Right Action Controls: Phone Hotline, Pricing, Terms & Active Indicator -->
+                <div class="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+                    <!-- Instant Dispatch Button Trigger -->
+                    <button type="button" onclick="openDispatchModal()" class="btn-pulse-hover text-xs font-bold text-white bg-[#105C7C] hover:bg-[#156D93] transition px-3 sm:px-4 py-1.5 rounded-lg inline-flex items-center gap-1.5 shadow-sm cursor-pointer">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>Request Interpreter</span>
+                    </button>
+
+                    <!-- Pricing Button Shortcut Linking Directly to Pay-As-You-Go Section -->
+                    <a href="#model" class="text-xs font-bold text-slate-700 hover:text-[#105C7C] transition border border-slate-200 px-2.5 sm:px-3 py-1.5 rounded-lg bg-slate-50 hover:bg-[#EEF6F9] inline-flex items-center gap-1.5 shadow-xs mr-0.5 sm:mr-1">
+                        <span class="text-[#105C7C] font-black">$1.48/min</span>
+                        <span class="hidden sm:inline">Pricing</span>
+                    </a>
+
+                    <!-- Terms & Disclaimers Modal Trigger (No Icon, Extended 'Legal Disclaimers' Label, Regular Weight) -->
+                    <button onclick="openTermsModal()" class="text-xs font-normal text-[#105C7C] hover:text-[#0E4B65] transition border border-slate-200 hover:border-[#C4DEE9] px-2.5 py-1.5 rounded-lg bg-slate-50 hover:bg-[#EEF6F9] inline-flex items-center cursor-pointer shadow-2xs whitespace-nowrap">
+                        <span class="hidden sm:inline">Legal Disclaimers</span>
+                        <span class="sm:hidden">Legal Disclaimers</span>
+                    </button>
+
+                    <!-- Active Indicator (Clean Minimalist: No Border/Box, Dot on Right) -->
+                    <span class="inline-flex items-center gap-1.5 text-xs font-bold text-[#105C7C] pl-1 sm:pl-1.5 whitespace-nowrap">
+                        <span>Active</span>
+                        <span class="w-2 h-2 rounded-full bg-[#105C7C] animate-pulse"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section: Clinical Authority -->
+    <section class="bg-gradient-to-b from-white via-slate-50 to-slate-100 border-b border-slate-200 py-12 sm:py-16 px-4 sm:px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            
+            <!-- Front & Center Unified Primary Action Buttons (Instant Dispatch & Advance Schedule) -->
+            <div class="mb-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+                <button type="button" onclick="openDispatchModal()" class="btn-pulse-hover w-full sm:w-auto inline-flex items-center justify-center space-x-2.5 bg-[#105C7C] hover:bg-[#156D93] text-white font-bold text-sm sm:text-base px-8 py-3.5 rounded-xl transition-all shadow-lg shadow-[#105C7C]/25 cursor-pointer">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>Request an Interpreter Now (VRI &amp; OPI)</span>
+                    <span>&rarr;</span>
+                </button>
+                <button type="button" onclick="openTrialModal()" class="btn-pulse-hover w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-white hover:bg-slate-50 text-[#105C7C] border border-[#C4DEE9] font-bold text-sm px-6 py-3.5 rounded-xl transition-all shadow-sm cursor-pointer">
+                    <svg class="w-4 h-4 text-[#105C7C]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span>Schedule Encounter / Call</span>
+                </button>
+            </div>
+
+            <!-- Clean Header Label (No rectangle or border, exact logo brand color) -->
+            <div class="text-xs font-bold uppercase tracking-wider text-[#105C7C] mb-3">
+                HIPAA Compliant • On-Demand OPI &amp; VRI • $1.48/min
+            </div>
+
+            <!-- Authoritative Headline -->
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-clinical-dark tracking-tight leading-snug mb-6 max-w-3xl mx-auto">
+                Specialized Medical Spanish Interpreting for Healthcare
+            </h1>
+
+            <!-- Secondary Actions -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto">
+                <a href="#specialties" class="btn-pulse-hover w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-clinical-dark border border-slate-300 font-bold text-xs transition-all shadow-sm cursor-pointer">
+                    Explore Clinical Specialties
+                </a>
+                <button type="button" onclick="openBaaModal()" class="btn-pulse-hover w-full sm:w-auto inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-white hover:bg-[#EEF6F9] text-[#105C7C] border border-[#C4DEE9] font-bold text-xs transition-all shadow-sm cursor-pointer">
+                    Request Healthcare BAA
+                </button>
+            </div>
+
+            <!-- Key Clinical Metrics -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-12 pt-8 border-t border-slate-200 text-left">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-2xl font-black text-clinical-navy">~60s</div>
+                    <div class="text-xs text-slate-500 font-medium mt-0.5">Average Medical Dispatch</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-2xl font-black text-emerald-700">HIPAA</div>
+                    <div class="text-xs text-slate-500 font-medium mt-0.5">Full Privacy &amp; BAA Ready</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-2xl font-black text-clinical-navy">$1.48<span class="text-xs font-semibold text-slate-500">/min</span></div>
+                    <div class="text-xs text-slate-500 font-medium mt-0.5">Exact Per-Second Metering</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="text-2xl font-black text-clinical-navy">24/7/365</div>
+                    <div class="text-xs text-slate-500 font-medium mt-0.5">Acute &amp; Scheduled Coverage</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Clinical Specialties Section -->
+    <section id="specialties" class="py-12 sm:py-16 px-4 sm:px-6 bg-white border-b border-slate-200">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <h2 class="text-xs font-bold text-[#105C7C] uppercase tracking-wider mb-1">Domain Expertise &amp; Linguistic Authority</h2>
+                <h3 class="text-2xl sm:text-3xl font-extrabold text-clinical-dark tracking-tight">Elite Clinical Competence</h3>
+                <p class="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+                    Our specialized collective is comprised of highly trained medical linguists, lexicographers, and clinical terminology researchers, backed by precision terminology engineering and over 35,000 acute clinical encounters on record.
+                </p>
+            </div>
+
+            <!-- Complimentary Clinical Trial Offer (Sober, Professional Precision) -->
+            <div class="mb-10 max-w-3xl mx-auto bg-slate-50 border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-left">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="w-2 h-2 rounded-full bg-[#105C7C]"></span>
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-[#105C7C]">Complimentary Clinical Trial</span>
+                    </div>
+                    <h4 class="text-base font-bold text-clinical-dark">Evaluate Our Standard on an Active Clinical Call</h4>
+                    <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+                        Experience our professional precision on a live, high-stakes medical encounter at no cost. Interpreted personally by our Founder &amp; CEO (subject to calendar availability). No commitments, no contracts, and no billing setup required.
+                    </p>
+                </div>
+                <div class="shrink-0 w-full sm:w-auto">
+                    <button type="button" onclick="openTrialModal()" class="btn-pulse-hover inline-flex items-center justify-center w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#105C7C] hover:bg-[#156D93] text-white font-bold text-xs transition shadow-sm cursor-pointer whitespace-nowrap">
+                        Schedule Trial Call &rarr;
+                    </button>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Specialty 1: Emergency & Acute Care -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 text-center hover:shadow-sm transition">
+                    <div class="text-xs font-bold uppercase tracking-wider text-[#0E4B65] mb-2 bg-[#EEF6F9] border border-[#C4DEE9] px-2.5 py-1 rounded inline-block">
+                        Emergency &amp; Acute Care
+                    </div>
+                    <h4 class="text-base sm:text-lg font-bold text-clinical-dark">Trauma &amp; Emergency Encounters</h4>
+                </div>
+
+                <!-- Specialty 2: Inpatient & Surgery -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 text-center hover:shadow-sm transition">
+                    <div class="text-xs font-bold uppercase tracking-wider text-[#0E4B65] mb-2 bg-[#EEF6F9] border border-[#C4DEE9] px-2.5 py-1 rounded inline-block">
+                        Surgical &amp; Inpatient
+                    </div>
+                    <h4 class="text-base sm:text-lg font-bold text-clinical-dark">Surgical &amp; Hospital Units</h4>
+                </div>
+
+                <!-- Specialty 3: Oncology, Neurology & Chronic Care -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 text-center hover:shadow-sm transition">
+                    <div class="text-xs font-bold uppercase tracking-wider text-[#0E4B65] mb-2 bg-[#EEF6F9] border border-[#C4DEE9] px-2.5 py-1 rounded inline-block">
+                        Complex &amp; Chronic Care
+                    </div>
+                    <h4 class="text-base sm:text-lg font-bold text-clinical-dark">Oncology &amp; Specialized Medicine</h4>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Delivery Modalities (OPI & VRI) -->
+    <section id="modalities" class="py-16 px-4 sm:px-6 bg-slate-100 border-b border-slate-200">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h3 class="text-2xl sm:text-3xl font-extrabold text-clinical-dark tracking-tight">On-Demand Medical Interpretation Modalities</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- OPI -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h4 class="text-lg font-bold text-clinical-dark mb-2 flex items-center gap-2">
+                            <span>Over-the-Phone Interpreting (OPI)</span>
+                            <span class="inline-flex items-center justify-center w-6 h-6 rounded-md bg-slate-100 text-slate-600 border border-slate-200" title="Telephonic Audio Modality">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                </svg>
+                            </span>
+                        </h4>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                            Direct telephonic bridging into our 1,000+ medical Spanish interpreter roster. Connect from any hospital desk phone, exam room handset, or mobile device with institutional PIN access.
+                        </p>
+                        <div class="bg-slate-50 p-3 rounded-xl text-xs text-slate-600 space-y-1.5 border border-slate-200/70 mb-4">
+                            <div><strong>Access:</strong> Institutional Dial-In Line with Dedicated Facility Account PIN.</div>
+                            <div><strong>Security:</strong> HIPAA Neutral Conduit with SIP-TLS &amp; SRTP voice encryption (Zero-Data-Trace).</div>
+                            <div><strong>Dispatch Speed:</strong> ~60 seconds to a live medical Spanish specialist.</div>
+                            <div><strong>Call Routing:</strong> Direct 3-way conference bridging with automated call logging.</div>
+                            <div><strong>Rate:</strong> $1.48/minute metered strictly by the second (zero round-ups).</div>
+                        </div>
+                    </div>
+                    <button type="button" onclick="openDispatchModal()" class="btn-pulse-hover w-full inline-flex items-center justify-center space-x-2 bg-[#EEF6F9] hover:bg-[#C4DEE9]/40 text-[#105C7C] border border-[#C4DEE9] font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-xs cursor-pointer">
+                        <svg class="w-3.5 h-3.5 text-[#105C7C]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                        <span>Request OPI Telephonic Access &rarr;</span>
+                    </button>
+                </div>
+
+                <!-- VRI -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h4 class="text-lg font-bold text-clinical-dark mb-2 flex items-center gap-2">
+                            <span>Video Remote Interpreting (VRI)</span>
+                            <span class="inline-flex items-center justify-center w-6 h-6 rounded-md bg-slate-100 text-slate-600 border border-slate-200" title="Video Encrypted Modality">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                            </span>
+                        </h4>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                            Encrypted browser-based video rooms for visual clinical consultations, patient bedside interaction, and psychiatric evaluations. Integrates with hospital telehealth carts and tablets.
+                        </p>
+                        <div class="bg-slate-50 p-3 rounded-xl text-xs text-slate-600 space-y-1.5 border border-slate-200/70 mb-4">
+                            <div><strong>Platform:</strong> HIPAA-compliant end-to-end encrypted WebRTC video relay.</div>
+                            <div><strong>Access:</strong> 100% browser-based. Zero software downloads or logins required.</div>
+                            <div><strong>Compatibility:</strong> iPad, Android tablets, Chrome, Safari, Edge, Zoom carts.</div>
+                            <div><strong>Dispatch Speed:</strong> Instant connection to on-demand Spanish medical specialists.</div>
+                            <div><strong>Rate:</strong> $1.48/minute metered strictly by the second.</div>
+                        </div>
+                    </div>
+                    <button type="button" onclick="launchInterpreterSession()" class="btn-pulse-hover w-full inline-flex items-center justify-center space-x-2 bg-[#105C7C] hover:bg-[#156D93] text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-xs cursor-pointer">
+                        <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        <span>Launch Secure Video Room (VRI) &rarr;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- On-Demand Model & Transparent Pricing: No Contracts, No Account Needed, Per-Second Metering -->
+    <section id="model" class="py-14 px-4 sm:px-6 bg-white border-b border-slate-200">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-xs font-bold text-[#105C7C] uppercase tracking-wider mb-1">On-Demand Access &amp; Pricing</h2>
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-clinical-dark tracking-tight mb-2">Pay-As-You-Go with Per-Second Metering</h3>
+            
+            <!-- Transparent Pricing Callout Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#EEF6F9] border border-[#C4DEE9] text-xs font-bold text-[#105C7C] mb-4 shadow-2xs">
+                <span class="text-base font-black text-[#105C7C]">$1.48 / min</span>
+                <span class="text-slate-400">&bull;</span>
+                <span>$0.0247 / second</span>
+                <span class="text-slate-400">&bull;</span>
+                <span class="text-slate-600 font-medium">Billed Strictly by the Second (Zero Round-Ups)</span>
+            </div>
+
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-2xl mx-auto mb-8">
+                No accounts required, no contracts, and zero minimum commitments. Providers access interpreting services on-demand at a flat $1.48 per minute and pay strictly for the exact seconds used—never rounded up.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 text-left text-xs">
+                <!-- Point 1 -->
+                <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
+                    <div class="text-xs font-bold uppercase tracking-wider text-[#0E4B65] mb-2 bg-[#EEF6F9] border border-[#C4DEE9] px-2.5 py-1 rounded inline-block">Zero Friction</div>
+                    <h4 class="text-sm font-bold text-clinical-dark mb-1">No Account Needed</h4>
+                    <p class="text-slate-600 leading-relaxed">No complex registration portals or passwords. Hospital staff, nurses, and physicians can initiate a session immediately whenever a Spanish-speaking patient requires care.</p>
+                </div>
+
+                <!-- Point 2 -->
+                <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
+                    <div class="text-xs font-bold uppercase tracking-wider text-[#0E4B65] mb-2 bg-[#EEF6F9] border border-[#C4DEE9] px-2.5 py-1 rounded inline-block">True Pay-As-You-Go</div>
+                    <h4 class="text-sm font-bold text-clinical-dark mb-1">No Fixed Contracts</h4>
+                    <p class="text-slate-600 leading-relaxed">Freedom from restrictive monthly retainers, annual volume minimums, or recurring platform fees. Activate the service strictly when clinical encounters occur.</p>
+                </div>
+
+                <!-- Point 3 -->
+                <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
+                    <div class="text-xs font-bold uppercase tracking-wider text-[#0E4B65] mb-2 bg-[#EEF6F9] border border-[#C4DEE9] px-2.5 py-1 rounded inline-block">Exact Metering</div>
+                    <h4 class="text-sm font-bold text-clinical-dark mb-1">Billed Strictly by the Second</h4>
+                    <p class="text-slate-600 leading-relaxed">At $1.48/minute ($0.0247/sec), we never round up to the next minute. Every encounter is metered down to the exact second so you only pay for actual clinical interpretation.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Compliance & Healthcare Governance -->
+    <section id="compliance" class="py-16 px-4 sm:px-6 bg-white border-b border-slate-200">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-xs font-bold text-[#105C7C] uppercase tracking-wider mb-1">Healthcare Governance</h2>
+            <h3 class="text-2xl font-extrabold text-clinical-dark mb-4">Healthcare Privacy &amp; Statutory Adherence</h3>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-2xl mx-auto mb-8">
+                MVHLSP operates under clinical data protection standards, providing legally binding Business Associate Agreements (BAAs) to covered healthcare entities.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left text-xs">
+                <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
+                    <div class="text-xs font-bold uppercase tracking-wider text-[#0E4B65] mb-2 bg-[#EEF6F9] border border-[#C4DEE9] px-2 py-0.5 rounded inline-block">HIPAA &amp; HITECH Act</div>
+                    <div class="text-slate-600">Zero data trace (ZDT) operational standard. Protected Health Information (PHI) is never permanently stored on intermediate servers.</div>
+                </div>
+                <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
+                    <div class="text-xs font-bold uppercase tracking-wider text-[#0E4B65] mb-2 bg-[#EEF6F9] border border-[#C4DEE9] px-2 py-0.5 rounded inline-block">Section 1557 ACA</div>
+                    <div class="text-slate-600">Adheres to federal non-discrimination mandates prohibiting the use of unqualified bilingual staff or minors for clinical encounters.</div>
+                </div>
+                <div class="p-5 rounded-xl border border-slate-200 bg-slate-50">
+                    <div class="text-xs font-bold uppercase tracking-wider text-[#0E4B65] mb-2 bg-[#EEF6F9] border border-[#C4DEE9] px-2 py-0.5 rounded inline-block">Title VI Civil Rights</div>
+                    <div class="text-slate-600">Ensures federally funded hospitals and health clinics fulfill statutory obligations for Limited English Proficient (LEP) individuals.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer & Contact -->
+    <footer class="bg-clinical-dark text-slate-300 py-12 px-4 sm:px-6 mt-auto">
+        <div class="max-w-6xl mx-auto space-y-8">
+            
+            <!-- Top Row: 3 Symmetrical, Proportional Columns Across Full Width -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-slate-800 text-xs">
+                
+                <!-- Col 1: Entity & Clinical Authority -->
+                <div>
+                    <div class="text-white font-black text-lg mb-2">MVHLSP</div>
+                    <p class="text-slate-400 text-xs leading-relaxed mb-3">
+                        Specialized Medical Spanish Language Service Provider delivering clinical human interpretation (OPI &amp; VRI) for acute healthcare systems, emergency departments, and specialty practices.
+                    </p>
+                    <p class="text-slate-400 text-xs leading-relaxed italic border-t border-slate-800/80 pt-2.5">
+                        Founded and operated by a collective of vetted frontline medical linguists.
+                    </p>
+                </div>
+
+                <!-- Col 2: Executive Leadership & Direct Accountability -->
+                <div>
+                    <div class="text-white font-bold text-sm mb-3">Executive Leadership &amp; Direct Access</div>
+                    <p class="text-slate-400 text-xs mb-3 leading-relaxed">
+                        Un-gatekept executive channel for hospital compliance, provider agreements, custom workflows, and immediate institutional feedback:
+                    </p>
+                    <div class="mb-2">
+                        <a href="mailto:info@mvhlsp.site" class="inline-flex items-center space-x-1.5 text-[#48A6CC] hover:text-[#72C1E3] font-semibold text-xs transition">
+                            <span class="text-slate-400 font-normal">Founder &amp; CEO:</span>
+                            <span class="underline">info@mvhlsp.site</span>
+                        </a>
+                    </div>
+                    <p class="text-slate-400 text-xs leading-relaxed">Direct clinical oversight and institutional BAA execution.</p>
+                </div>
+
+                <!-- Col 3: Technology Portals -->
+                <div>
+                    <div class="text-white font-bold text-sm mb-3">Connected Systems</div>
+                    <p class="text-slate-400 text-xs mb-3 leading-relaxed">Direct infrastructure access and operational portals:</p>
+                    <ul class="space-y-2 text-xs">
+                        <li>
+                            <a href="https://www.proz.com/remoto/b/mvhlsp" target="_blank" rel="noopener noreferrer" class="text-slate-300 hover:text-white transition inline-flex items-center gap-1.5">
+                                <span class="text-[#48A6CC]">&rarr;</span>
+                                <span>Book an Interpreter</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://abrevia-beta.vercel.app" target="_blank" rel="noopener noreferrer" class="text-slate-300 hover:text-white transition inline-flex items-center gap-1.5">
+                                <span class="text-[#48A6CC]">&rarr;</span>
+                                <span>Abrevia Bilingual Communication Relay</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.proz.com/business-page/MVHLSP" target="_blank" rel="noopener noreferrer" class="text-slate-300 hover:text-white transition inline-flex items-center gap-1.5">
+                                <span class="text-[#48A6CC]">&rarr;</span>
+                                <span>ProZ.com Agency Profile (MVHLSP)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.proz.com/remoto/privacy" target="_blank" rel="noopener noreferrer" class="text-slate-300 hover:text-white transition inline-flex items-center gap-1.5">
+                                <span class="text-[#48A6CC]">&rarr;</span>
+                                <span>Technology Infrastructure &amp; Privacy</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-slate-300 hover:text-white transition inline-flex items-center gap-1.5">
+                                <span class="text-[#48A6CC]">&rarr;</span>
+                                <span>Free Provider Resources</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Middle Section: 2 Wide, Balanced Grid Columns Utilizing the Full Width -->
+            <!-- Terms of Service, Neutral Conduit Doctrine & Clinical Shield (Centered Full Width) -->
+            <div class="max-w-4xl mx-auto pb-8 border-b border-slate-800 text-xs text-center space-y-3.5">
+                <div class="text-slate-200 font-bold text-sm flex items-center justify-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#48A6CC]"></span>
+                    <span>Terms of Service, Clinical Shield &amp; Standards</span>
+                </div>
+                <p class="text-slate-400 leading-relaxed text-xs max-w-3xl mx-auto">
+                    By browsing, accessing, or utilizing this website (mvhlsp.site) or requesting MVHLSP interpreting services, you and your represented organization agree to be legally bound by our Terms of Service immediately upon access. MVHLSP provides specialized Medical Spanish interpretation strictly as a neutral linguistic conduit under Section 1557 ACA, Title VI Civil Rights, and HIPAA/HITECH privacy mandates.
+                </p>
+                <p class="text-slate-400 leading-relaxed text-xs max-w-3xl mx-auto">
+                    All interpreters undergo formal bilingual fluency screening and clinical terminology vetting adhering to NCIHC and ASTM F2089 standards. Interpreters act solely as communication facilitators and do not practice medicine or make clinical evaluations. Licensed healthcare providers retain exclusive, non-delegable clinical authority for all medical care.
+                </p>
+                <div class="pt-1 flex justify-center">
+                    <button onclick="openTermsModal()" class="text-[#48A6CC] hover:text-[#72C1E3] font-bold text-xs inline-flex items-center gap-1 cursor-pointer">
+                        <span>Read Comprehensive Terms of Service &amp; Clinical Shield</span>
+                        <span>&rarr;</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bottom Row: Copyright & Domain Bar -->
+            <div class="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2">
+                <div>&copy; 2026 MVHLSP. All rights reserved. Specialized Medical Spanish Interpreting.</div>
+                <div>Domain: <strong>mvhlsp.site</strong></div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Legal Terms of Service & Liability Shield Modal -->
+    <div id="terms-modal" role="dialog" aria-modal="true" aria-labelledby="terms-modal-title" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+            <!-- Modal Header -->
+            <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-[#105C7C]"></span>
+                    <h3 id="terms-modal-title" class="text-sm font-bold text-clinical-dark uppercase tracking-wide">Terms of Service &amp; Clinical Disclaimers</h3>
+                </div>
+                <button type="button" onclick="closeTermsModal()" aria-label="Close legal disclaimers modal" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg transition text-xl leading-none cursor-pointer">&times;</button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="p-6 overflow-y-auto space-y-4 text-xs text-slate-600 leading-relaxed max-h-[65vh]">
+                <div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-1">1. Binding Institutional Agreement by Site Access</h4>
+                    <p>By browsing, accessing, linking to, or utilizing mvhlsp.site, or by transmitting an interpreting dispatch request through any MVHLSP portal or integrated interface, you, your healthcare system, medical practice, hospital, clinic, or affiliated entity irrevocably agree to be legally bound by these comprehensive Terms of Service immediately upon access. If you do not accept these terms in full without qualification, you must immediately terminate use of this site and refrain from requesting services.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-1">2. Professional Vetting, Clinical Standards &amp; Industry Adherence</h4>
+                    <p>MVHLSP contracts exclusively with vetted, experienced medical interpreters with proven track records in acute care, emergency medicine, oncology, pediatrics, and surgical consultations. All interpreters operate in strict alignment with:</p>
+                    <ul class="list-disc pl-5 mt-1.5 space-y-1 text-slate-600">
+                        <li><strong>National Standards:</strong> National Council on Interpreting in Health Care (NCIHC) National Code of Ethics and Standards of Practice.</li>
+                        <li><strong>Technical Specifications:</strong> ASTM F2089 (Standard Practice for Language Interpreting) and California Healthcare Interpreting Association (CHIA) ethical guidelines.</li>
+                        <li><strong>Linguistic Competence:</strong> Rigorous bilingual proficiency evaluations, verified medical terminology accuracy, register maintenance, and register-neutral conduit performance.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-1">3. Neutral Linguistic Conduit Doctrine (No Practice of Medicine)</h4>
+                    <p>MVHLSP and its designated interpreters operate strictly and exclusively as verbatim, neutral linguistic transmission conduits. Interpreters do not practice medicine, render clinical diagnoses, evaluate medical necessity, offer triage advice, select medical interventions, or administer treatment. All clinical judgments, diagnostic evaluations, medical decisions, informed consent discussions, and patient outcomes remain under the sole, absolute, and non-delegable authority and legal liability of the attending licensed healthcare provider.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-1">4. Healthcare Regulatory Mandates &amp; Statutory Compliance</h4>
+                    <p>MVHLSP provides language access in strict compliance with Section 1557 of the Affordable Care Act (ACA), Title VI of the Civil Rights Act of 1964 (42 U.S.C. &sect; 2000d), Executive Order 13166, and HIPAA/HITECH privacy and security regulations under a strict Zero-Data-Trace (ZDT) operational architecture. Legally binding Business Associate Agreements (BAAs) are executed upon institutional intake.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-1">5. Comprehensive Limitation of Clinical Liability &amp; Indemnification</h4>
+                    <p>To the maximum extent permitted under applicable law, MVHLSP, its directors, officers, agents, and independent interpreting collective shall not be liable under any legal theory (whether contract, tort, negligence, medical malpractice, or strict liability) for any direct, indirect, incidental, consequential, or punitive damages arising from medical care, patient outcomes, diagnostic omissions by medical staff, or interruptions in carrier telecommunications infrastructure (PSTN, cellular, VoIP, or broadband ISP networks). The healthcare facility agrees to defend and indemnify MVHLSP against any third-party claims arising from the clinical care delivered by the provider's staff.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-1">6. Transparent On-Demand Metering &amp; Payment Governance</h4>
+                    <p>Services are rendered on an on-demand, pay-as-you-go basis at $1.48 USD per minute ($0.0247 USD per second) with zero minimum contracts, zero monthly retainers, and zero upfront platform subscriptions. Billing is calculated strictly down to the exact second of active clinical connection—never rounded up to the nearest minute. Payments are processed via encrypted institutional invoicing or card-on-file settlement.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-1">7. Open Access Agreement &amp; Platform Integrity</h4>
+                    <p>MVHLSP operates on foundational principles of mutual trust, total transparency, and clinical excellence rather than restrictive monopoly lock-in. Under this Open Access Agreement:</p>
+                    <ul class="list-disc pl-5 mt-1.5 space-y-1 text-slate-600">
+                        <li><strong>Non-Exclusive Professional Freedom:</strong> Interpreters retain complete professional autonomy to collaborate with other LSPs, hospital systems, and private clients. Healthcare providers retain absolute freedom to engage any external language service vendors.</li>
+                        <li><strong>Automated Instant Dispatch Protocol:</strong> On-demand clinical encounters are routed via automated algorithmic dispatch across qualified, active interpreters, ensuring immediate ring connection and high-availability clinical coverage without manual gatekeeping.</li>
+                        <li><strong>Platform Settlement Integrity:</strong> For all clinical encounters facilitated, matched, or scheduled through the MVHLSP network, all telecommunications routing, per-second metering, invoicing, and practitioner disbursements must be conducted exclusively through the MVHLSP platform infrastructure. Bypassing the platform for MVHLSP-facilitated encounters voids statutory HIPAA Business Associate Agreement (BAA) protections, invalidates quality assurances, and compromises practitioner compensation guarantees.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-800 text-sm mb-1">8. Professional Conduct, Fair Use &amp; Zero-Tolerance Misuse Policy</h4>
+                    <p>MVHLSP enforces rigorous behavioral, security, and ethical standards across all telecommunication sessions. By accessing or utilizing the service, all clients and calling parties agree to strict compliance with our Acceptable Use Policy:</p>
+                    <ul class="list-disc pl-5 mt-1.5 space-y-1 text-slate-600">
+                        <li><strong>Zero Tolerance for Abuse &amp; Harassment:</strong> We maintain an absolute zero-tolerance standard regarding verbal abuse, profanity, threats, discriminatory or hostile remarks, sexual harassment, or demeaning conduct toward medical interpreters. In accordance with NCIHC ethical standards and workplace safety regulations, interpreters possess the unqualified professional right to immediately terminate any session where abusive conduct occurs.</li>
+                        <li><strong>Strict Prohibition on Unauthorized Recording:</strong> Audio, video, screen capture, or third-party digital recording of interpreting sessions without prior express written consent is strictly prohibited under federal and state wiretap statutes and HIPAA privacy regulations.</li>
+                        <li><strong>Bona Fide Healthcare Use Exclusivity:</strong> Services are provided exclusively for legitimate healthcare, clinical, psychiatric, pediatric, pharmaceutical, and patient-care administrative communications. Any non-clinical solicitation, prank calls, commercial spam, illicit activities, or fraudulent testing is strictly barred.</li>
+                        <li><strong>Credential &amp; Telecommunication Integrity:</strong> Call spoofing, identity misrepresentation, automated line flooding, reverse engineering of relay protocols, or circumventing access controls will result in immediate termination, permanent blacklisting, and potential legal referral.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="px-6 py-3 border-t border-slate-200 bg-slate-50 flex items-center justify-between text-[11px] text-slate-500">
+                <span>MVHLSP Healthcare Governance</span>
+                <button onclick="closeTermsModal()" class="px-4 py-1.5 rounded-lg bg-[#105C7C] hover:bg-[#156D93] text-white font-bold text-xs transition cursor-pointer">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instant Interpreter Dispatch & Telecommunication Modal -->
+    <div id="dispatch-modal" role="dialog" aria-modal="true" aria-labelledby="dispatch-modal-title" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+            <!-- Modal Header -->
+            <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <div>
+                        <h3 id="dispatch-modal-title" class="text-sm font-bold text-clinical-dark uppercase tracking-wide">Connect to Medical Spanish Interpreter</h3>
+                        <p class="text-[10px] text-slate-500 font-medium">On-Demand OPI &amp; VRI • Frontline Collective Roster • $1.48/min</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeDispatchModal()" aria-label="Close dispatch modal" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg transition text-xl leading-none cursor-pointer">&times;</button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="p-6 overflow-y-auto space-y-4 text-xs text-slate-600 leading-relaxed">
+                <!-- Status Badge -->
+                <div class="bg-emerald-50 border border-emerald-200 text-emerald-900 p-3 rounded-xl text-[11px] flex items-center justify-between">
+                    <span class="font-bold flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+                        Roster Status: Active &amp; Ready
+                    </span>
+                    <span class="font-semibold text-emerald-800">~60s Dispatch</span>
+                </div>
+
+                <!-- Primary Dispatch Option: Instant Encounter Room -->
+                <div class="border border-slate-200 rounded-xl p-4 bg-slate-50 hover:border-[#105C7C] transition">
+                    <div class="flex items-start justify-between gap-3 mb-2">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-xs sm:text-sm">Instant Video &amp; Audio Relay (VRI / OPI)</h4>
+                            <p class="text-[11px] text-slate-500 mt-0.5">Launches an encrypted, browser-based clinical encounter with our specialized medical Spanish interpreters. No software downloads required.</p>
+                        </div>
+                    </div>
+                    <button type="button" onclick="launchInterpreterSession()" class="w-full mt-2 btn-pulse-hover bg-[#105C7C] hover:bg-[#156D93] text-white font-bold py-3 px-4 rounded-xl text-xs transition shadow-md shadow-[#105C7C]/20 flex items-center justify-center space-x-2 cursor-pointer">
+                        <span>Launch Secure Encounter Room</span>
+                        <span>&rarr;</span>
+                    </button>
+                </div>
+
+                <!-- Secondary Dispatch Option: Dedicated Phone Bridging -->
+                <div class="border border-slate-200 rounded-xl p-4 bg-white">
+                    <h4 class="font-bold text-slate-900 text-xs sm:text-sm">Institutional Phone Line Dial-In (OPI)</h4>
+                    <p class="text-[11px] text-slate-500 mt-1">
+                        Connect nurses, physicians, and Spanish-speaking patients from any hospital handset or exam room line via Remoto's dedicated telephonic network:
+                    </p>
+                    <div class="mt-2.5 p-3.5 rounded-xl bg-[#EEF6F9] border border-[#C4DEE9] space-y-2">
+                        <div class="text-xs font-bold text-slate-800 flex items-center justify-between">
+                            <span>Facility Access Status:</span>
+                            <span class="text-xs font-mono font-bold text-[#105C7C] bg-white border border-[#C4DEE9] px-2 py-0.5 rounded">Remoto Institutional Network</span>
+                        </div>
+                        <div class="text-[11px] text-slate-600 leading-normal">
+                            Direct telephonic routing into our pool of 1,000+ medical Spanish interpreters. Billed strictly by the second ($1.48/min) with zero rounding up.
+                        </div>
+                        <div class="pt-1">
+                            <button type="button" onclick="launchInterpreterSession()" class="btn-pulse-hover w-full inline-flex items-center justify-center space-x-2 bg-[#105C7C] hover:bg-[#156D93] text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-sm cursor-pointer">
+                                <span>Launch Audio &amp; Video Encounter Room &rarr;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Switch to Scheduled Call -->
+                <div class="text-center pt-2">
+                    <p class="text-[11px] text-slate-500">
+                        Need an advance appointment or trial call?
+                        <button type="button" onclick="closeDispatchModal(); openTrialModal();" class="text-[#105C7C] font-bold hover:underline cursor-pointer ml-1">Schedule a Call &rarr;</button>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="px-6 py-3 border-t border-slate-200 bg-slate-50 flex items-center justify-between text-[11px] text-slate-500">
+                <span>Exact Per-Second Metering ($1.48/min)</span>
+                <button type="button" onclick="closeDispatchModal()" class="px-4 py-1.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs transition cursor-pointer">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Clinical Scheduling Modal (Advance Encounter, Provider Consultation, Trial) -->
+    <div id="trial-modal" role="dialog" aria-modal="true" aria-labelledby="trial-modal-title" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+            <!-- Modal Header -->
+            <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-[#105C7C]"></span>
+                    <div>
+                        <h3 id="trial-modal-title" class="text-sm font-bold text-clinical-dark uppercase tracking-wide">Schedule a Clinical Call or Consultation</h3>
+                        <p class="text-[10px] text-slate-500 font-medium">Advance Encounter • Provider Consultation • Complimentary Trial</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeTrialModal()" aria-label="Close appointment modal" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg transition text-xl leading-none cursor-pointer">&times;</button>
+            </div>
+            
+            <!-- Modal Body (Form View) -->
+            <div id="trial-form-container" class="p-6 overflow-y-auto space-y-4 text-xs text-slate-600 leading-relaxed max-h-[70vh]">
+                <div class="bg-[#EEF6F9] border border-[#C4DEE9] text-[#105C7C] p-3 rounded-xl text-[11px] leading-relaxed">
+                    <strong>Flexible Clinical Scheduling:</strong> Coordinate upcoming patient procedures, provider onboarding, or evaluate our live clinical standard on a trial encounter (minimum 48h advance notice).
+                </div>
+
+                <form id="trial-request-form" onsubmit="handleTrialSubmit(event)" class="space-y-3.5">
+                    <div>
+                        <label for="trial-org-name" class="block text-slate-700 font-bold mb-1">Healthcare Organization / Practice Name *</label>
+                        <input type="text" id="trial-org-name" required placeholder="e.g. St. Jude Regional Clinic, Austin Health Partners" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-[#105C7C] focus:ring-1 focus:ring-[#105C7C]">
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label for="trial-contact-name" class="block text-slate-700 font-bold mb-1">Attending Clinician / Lead *</label>
+                            <input type="text" id="trial-contact-name" required placeholder="e.g. Dr. Robert Vance, MD" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-[#105C7C] focus:ring-1 focus:ring-[#105C7C]">
+                        </div>
+                        <div>
+                            <label for="trial-type" class="block text-slate-700 font-bold mb-1">Appointment Type *</label>
+                            <select id="trial-type" required class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-[#105C7C] focus:ring-1 focus:ring-[#105C7C] bg-white">
+                                <option value="Advance Scheduled Encounter">Advance Scheduled Patient Encounter ($1.48/min)</option>
+                                <option value="Practice Coordination Call">Practice Onboarding &amp; Operations Call</option>
+                                <option value="Complimentary Trial Encounter">Complimentary Clinical Trial Encounter</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label for="trial-specialty" class="block text-slate-700 font-bold mb-1">Clinical Specialty *</label>
+                            <select id="trial-specialty" required class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-[#105C7C] focus:ring-1 focus:ring-[#105C7C] bg-white">
+                                <option value="Emergency & Acute Care">Emergency / Acute Care</option>
+                                <option value="Surgical / Inpatient Unit">Surgical / Pre-Op / Inpatient</option>
+                                <option value="Oncology / Complex Chronic Care">Oncology / Neurology / Complex Care</option>
+                                <option value="Pediatrics / Family Medicine">Pediatrics / Family Practice</option>
+                                <option value="Other Clinical Specialty">Other Specialty</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="trial-phone" class="block text-slate-700 font-bold mb-1">Callback Phone Number *</label>
+                            <input type="tel" id="trial-phone" required placeholder="(555) 000-0000" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-[#105C7C] focus:ring-1 focus:ring-[#105C7C]">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label for="trial-email" class="block text-slate-700 font-bold mb-1">Work / Institutional Email *</label>
+                            <input type="email" id="trial-email" required placeholder="physician@hospital.org" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-[#105C7C] focus:ring-1 focus:ring-[#105C7C]">
+                        </div>
+                        <div>
+                            <label for="trial-date" class="block text-slate-700 font-bold mb-1">Requested Date *</label>
+                            <input type="date" id="trial-date" required class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-[#105C7C] focus:ring-1 focus:ring-[#105C7C]">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="trial-time-window" class="block text-slate-700 font-bold mb-1">Preferred Time Window *</label>
+                        <select id="trial-time-window" required class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-[#105C7C] focus:ring-1 focus:ring-[#105C7C] bg-white">
+                            <option value="Morning (08:00 - 12:00 Local)">Morning (08:00 – 12:00 Local)</option>
+                            <option value="Early Afternoon (12:00 - 15:00 Local)">Early Afternoon (12:00 – 15:00 Local)</option>
+                            <option value="Late Afternoon (15:00 - 18:00 Local)">Late Afternoon (15:00 – 18:00 Local)</option>
+                        </select>
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="submit" class="w-full btn-pulse-hover bg-[#105C7C] hover:bg-[#156D93] text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-md shadow-[#105C7C]/20 flex items-center justify-center space-x-2 cursor-pointer">
+                            <span>Confirm Appointment Request</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Success State View (Hidden by default) -->
+            <div id="trial-success-container" class="hidden p-6 text-center space-y-4">
+                <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
+                    &check;
+                </div>
+                <div>
+                    <h4 class="text-base font-bold text-slate-900 mb-1">Appointment Request Confirmed</h4>
+                    <p class="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
+                        Your scheduled call request has been received by MVHLSP Operations. Dedicated calendar invitation and encounter dial-in coordinates are being sent to:
+                    </p>
+                    <div class="inline-block bg-slate-100 px-3 py-1.5 rounded-lg text-xs font-bold text-[#105C7C] mt-2" id="trial-confirmed-email">
+                        physician@hospital.org
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-left text-[11px] text-slate-600 space-y-1">
+                    <div><strong>Facility:</strong> <span id="trial-confirmed-org">Organization</span></div>
+                    <div><strong>Clinician:</strong> <span id="trial-confirmed-name">Clinician</span></div>
+                    <div><strong>Appointment Type:</strong> <span id="trial-confirmed-type">Advance Encounter</span></div>
+                    <div><strong>Requested Date:</strong> <span id="trial-confirmed-date">Date</span></div>
+                    <div><strong>Direct Coordination:</strong> info@mvhlsp.site</div>
+                </div>
+
+                <div class="pt-2 flex justify-center gap-3">
+                    <button type="button" onclick="closeTrialModal()" class="px-5 py-2 bg-[#105C7C] hover:bg-[#156D93] text-white font-bold rounded-xl text-xs transition shadow-sm cursor-pointer">
+                        Done
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Healthcare BAA Request & Intake Modal -->
+    <div id="baa-modal" role="dialog" aria-modal="true" aria-labelledby="baa-modal-title" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+            <!-- Modal Header -->
+            <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-[#105C7C]"></span>
+                    <div>
+                        <h3 id="baa-modal-title" class="text-sm font-bold text-clinical-dark uppercase tracking-wide">Request Healthcare BAA</h3>
+                        <p class="text-[10px] text-slate-500 font-medium">HIPAA / HITECH Omnibus Compliant Business Associate Agreement</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeBaaModal()" aria-label="Close BAA modal" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg transition text-xl leading-none cursor-pointer">&times;</button>
+            </div>
+            
+            <!-- Modal Body (Form View) -->
+            <div id="baa-form-container" class="p-6 overflow-y-auto space-y-4 text-xs text-slate-600 leading-relaxed max-h-[70vh]">
+                <p class="text-slate-600 text-xs">
+                    Please provide your healthcare entity details below. Upon submission, an official Business Associate Agreement pre-signed by the <strong>Founder &amp; CEO of MVHLSP</strong> will be prepared and sent directly to your institutional email.
+                </p>
+
+                <form id="baa-request-form" onsubmit="handleBaaSubmit(event)" class="space-y-3.5">
+                    <div>
+                        <label for="baa-org-name" class="block text-slate-700 font-bold mb-1">Healthcare Organization / Practice Name *</label>
+                        <input type="text" id="baa-org-name" required placeholder="e.g. Memorial Health System, Valley Urgent Care" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-[#105C7C] focus:ring-1 focus:ring-[#105C7C]">
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label for="baa-contact-name" class="block text-slate-700 font-bold mb-1">Authorized Contact / Title *</label>
+                            <input type="text" id="baa-contact-name" required placeholder="e.g. Dr. Jane Smith, Practice Admin" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-[#105C7C] focus:ring-1 focus:ring-[#105C7C]">
+                        </div>
+                        <div>
+                            <label for="baa-entity-type" class="block text-slate-700 font-bold mb-1">Entity Classification *</label>
+                            <select id="baa-entity-type" required class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-[#105C7C] focus:ring-1 focus:ring-[#105C7C] bg-white">
+                                <option value="Hospital / Health System">Hospital / Acute Care System</option>
+                                <option value="Outpatient / Specialty Clinic">Outpatient / Specialty Clinic</option>
+                                <option value="Telehealth Provider">Telehealth / Digital Health Entity</option>
+                                <option value="Private Practice / Group">Private Medical Practice</option>
+                                <option value="Community Health Center / FQHC">Community Health Center (FQHC)</option>
+                                <option value="Other Covered Entity">Other HIPAA Covered Entity</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label for="baa-email" class="block text-slate-700 font-bold mb-1">Institutional Email *</label>
+                            <input type="email" id="baa-email" required placeholder="compliance@hospital.org" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-[#105C7C] focus:ring-1 focus:ring-[#105C7C]">
+                        </div>
+                        <div>
+                            <label for="baa-phone" class="block text-slate-700 font-bold mb-1">Direct Phone Number (Optional)</label>
+                            <input type="tel" id="baa-phone" placeholder="(555) 000-0000" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs text-slate-800 focus:outline-none focus:border-[#105C7C] focus:ring-1 focus:ring-[#105C7C]">
+                        </div>
+                    </div>
+
+                    <!-- Regulatory Reassurance & Legal Terms Confirmation -->
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2">
+                        <label class="flex items-start gap-2 cursor-pointer">
+                            <input type="checkbox" id="baa-agree-terms" required checked class="mt-0.5 rounded text-[#105C7C] focus:ring-[#105C7C]">
+                            <span class="text-[11px] text-slate-600 leading-normal">
+                                I confirm our status as a HIPAA Covered Entity or authorized healthcare agent. We acknowledge the MVHLSP <strong>Neutral Linguistic Conduit Doctrine</strong> and standard terms of service.
+                            </span>
+                        </label>
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="submit" class="w-full btn-pulse-hover bg-[#105C7C] hover:bg-[#156D93] text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-md shadow-[#105C7C]/20 flex items-center justify-center space-x-2 cursor-pointer">
+                            <span>Request Pre-Signed Healthcare BAA</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Success State View (Hidden by default, Scrollable & Fully Sized) -->
+            <div id="baa-success-container" class="hidden p-6 overflow-y-auto text-center space-y-4 max-h-[65vh]">
+                <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold shrink-0">
+                    &check;
+                </div>
+                <div>
+                    <h4 class="text-base font-bold text-slate-900 mb-1">BAA Generated &amp; Executed</h4>
+                    <p class="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
+                        An official, pre-signed <strong>Business Associate Agreement (BAA)</strong> bearing the executive signature of the <strong>Founder &amp; CEO of MVHLSP</strong> is ready for your records. A copy has also been queued for:
+                    </p>
+                    <div class="inline-block bg-slate-100 px-3 py-1.5 rounded-lg text-xs font-bold text-[#105C7C] mt-2" id="baa-confirmed-email">
+                        your-email@facility.org
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-left text-[11px] text-slate-600 space-y-2">
+                    <div><strong>Hospital / Covered Entity:</strong> <span id="baa-confirmed-org" class="font-bold text-slate-800">Organization</span></div>
+                    <div><strong>Authorized Signatory:</strong> <span id="baa-confirmed-name" class="font-bold text-slate-800">Signatory</span></div>
+                    <div><strong>Regulatory Shield:</strong> 45 CFR &sect; 164.502(e) &amp; &sect; 164.504(e) with Zero-Data-Trace (ZDT) telecommunications.</div>
+
+                    <!-- Pre-Signed Executive Authorization Badge -->
+                    <div class="pt-2 border-t border-slate-200 flex items-center justify-between">
+                        <div>
+                            <div class="text-[9px] uppercase tracking-wider text-slate-400 font-bold">Executed by Business Associate</div>
+                            <div class="font-bold text-slate-800 text-xs">Alejandro Diaz Guerrero</div>
+                            <div class="text-[10px] text-[#105C7C] font-semibold">Founder &amp; CEO, MVHLSP</div>
+                        </div>
+                        <div class="bg-white p-1 rounded-lg border border-slate-200 shadow-2xs">
+                            <img src="signature.jpg" alt="Signature of Alejandro Diaz Guerrero" class="h-9 w-auto object-contain">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instant Download / Print and Done Action Buttons -->
+                <div class="pt-2 flex flex-col sm:flex-row justify-center items-center gap-2.5">
+                    <button type="button" onclick="downloadBaaDocument()" class="w-full sm:w-auto btn-pulse-hover inline-flex items-center justify-center space-x-2 bg-[#105C7C] hover:bg-[#156D93] text-white font-bold py-2.5 px-5 rounded-xl text-xs transition shadow-md shadow-[#105C7C]/20 cursor-pointer">
+                        <span>Save / Print Official BAA (PDF)</span>
+                        <span>&darr;</span>
+                    </button>
+                    <button type="button" onclick="closeBaaModal()" class="w-full sm:w-auto px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl text-xs transition shadow-xs cursor-pointer">
+                        Done
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- PWA / Shortcut Prompt & Modal Scripts -->
+    <script>
+        // Dispatch Modal functions
+        function openDispatchModal() {
+            document.getElementById('dispatch-modal').classList.remove('hidden');
+        }
+        function closeDispatchModal() {
+            document.getElementById('dispatch-modal').classList.add('hidden');
+        }
+        function launchInterpreterSession() {
+            window.open('https://www.proz.com/remoto/b/mvhlsp/connect', '_blank', 'noopener,noreferrer');
+            closeDispatchModal();
+        }
+
+        // Terms Modal functions
+        function openTermsModal() {
+            document.getElementById('terms-modal').classList.remove('hidden');
+        }
+        function closeTermsModal() {
+            document.getElementById('terms-modal').classList.add('hidden');
+        }
+
+        // BAA Modal functions
+        function openBaaModal() {
+            document.getElementById('baa-form-container').classList.remove('hidden');
+            document.getElementById('baa-success-container').classList.add('hidden');
+            document.getElementById('baa-modal').classList.remove('hidden');
+        }
+        function closeBaaModal() {
+            document.getElementById('baa-modal').classList.add('hidden');
+        }
+        function handleBaaSubmit(e) {
+            e.preventDefault();
+            const org = document.getElementById('baa-org-name').value;
+            const name = document.getElementById('baa-contact-name').value;
+            const email = document.getElementById('baa-email').value;
+
+            document.getElementById('baa-confirmed-org').textContent = org;
+            document.getElementById('baa-confirmed-name').textContent = name;
+            document.getElementById('baa-confirmed-email').textContent = email;
+
+            document.getElementById('baa-form-container').classList.add('hidden');
+            document.getElementById('baa-success-container').classList.remove('hidden');
+        }
+
+        // BAA Printable / Downloadable Document Generator
+        function downloadBaaDocument() {
+            const org = document.getElementById('baa-confirmed-org').textContent || 'Healthcare Organization';
+            const name = document.getElementById('baa-confirmed-name').textContent || 'Authorized Clinician';
+            const email = document.getElementById('baa-confirmed-email').textContent || 'info@mvhlsp.site';
+            const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`<!DOCTYPE html><html><head><title>HIPAA BAA - ${org} & MVHLSP</title><style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;padding:36px;color:#1C1C1C;line-height:1.5;font-size:12px}h1{font-size:18px;color:#105C7C;margin-bottom:4px;text-transform:uppercase}h2{font-size:13px;margin-top:16px;margin-bottom:6px;border-bottom:1px solid #C4DEE9;padding-bottom:4px;color:#105C7C}.badge{display:inline-block;background:#EEF6F9;border:1px solid #C4DEE9;color:#105C7C;font-weight:bold;font-size:10px;padding:2px 8px;border-radius:4px;margin-bottom:16px}.details{background:#f8fafc;border:1px solid #e2e8f0;padding:12px;border-radius:8px;margin:16px 0}.signatures{margin-top:30px;display:flex;justify-content:space-between;gap:30px}.sig-block{flex:1;border-top:1px solid #cbd5e1;padding-top:8px}@media print{body{padding:20px}}</style></head><body><div class="badge">HIPAA / HITECH Omnibus Compliant • 45 CFR § 164.502(e) & § 164.504(e)</div><h1>Business Associate Agreement (BAA)</h1><p><strong>Effective Date:</strong> ${today}</p><div class="details"><p><strong>Covered Entity:</strong> ${org}</p><p><strong>Authorized Signatory:</strong> ${name} (${email})</p><p><strong>Business Associate:</strong> MVHLSP (Specialized Medical Spanish Interpreting Collective)</p></div><h2>1. Neutral Linguistic Conduit & Telecommunications Scope</h2><p>Business Associate provides specialized real-time oral and video interpretation (OPI/VRI). In accordance with the HHS HIPAA Privacy Rule (45 CFR § 164.502) and the Neutral Conduit Doctrine, transmission of transient verbal/visual Protected Health Information (PHI) occurs with Zero-Data-Trace (ZDT). No audio, video, or clinical communication is recorded, stored, mined, or retained.</p><h2>2. Safeguards and Regulatory Obligations</h2><p>Business Associate maintains administrative, physical, and technical safeguards in compliance with 45 CFR § 164.308, § 164.310, and § 164.312, ensuring all interpreters are bound by statutory confidentiality and HIPAA omnibus mandates.</p><h2>3. Execution & Authorization</h2><div class="signatures"><div class="sig-block"><p><strong>Covered Entity / Healthcare Provider:</strong></p><p><strong>Entity:</strong> ${org}</p><p><strong>Signed by:</strong> ${name}</p><p><strong>Date:</strong> ${today}</p></div><div class="sig-block"><p><strong>Business Associate: MVHLSP</strong></p><p><strong>Signed by:</strong> Alejandro Diaz Guerrero</p><p><strong>Title:</strong> Founder & CEO, MVHLSP</p><p><strong>Date:</strong> ${today}</p><img src="signature.jpg" style="height:38px;margin-top:4px" alt="Signature"></div></div><script>window.onload=function(){window.print()}<\/script></body></html>`);
+            printWindow.document.close();
+        }
+
+        // Trial / Scheduling Modal functions
+        function openTrialModal() {
+            document.getElementById('trial-form-container').classList.remove('hidden');
+            document.getElementById('trial-success-container').classList.add('hidden');
+            // Set minimum date to 48 hours in advance (2 days notice)
+            const dateInput = document.getElementById('trial-date');
+            if (dateInput) {
+                const minDate = new Date();
+                minDate.setDate(minDate.getDate() + 2);
+                dateInput.min = minDate.toISOString().split('T')[0];
+            }
+            document.getElementById('trial-modal').classList.remove('hidden');
+        }
+        function closeTrialModal() {
+            document.getElementById('trial-modal').classList.add('hidden');
+        }
+        function handleTrialSubmit(e) {
+            e.preventDefault();
+            const org = document.getElementById('trial-org-name').value;
+            const name = document.getElementById('trial-contact-name').value;
+            const email = document.getElementById('trial-email').value;
+            const date = document.getElementById('trial-date').value;
+            const type = document.getElementById('trial-type') ? document.getElementById('trial-type').value : 'Advance Scheduled Encounter';
+
+            document.getElementById('trial-confirmed-org').textContent = org;
+            document.getElementById('trial-confirmed-name').textContent = name;
+            document.getElementById('trial-confirmed-email').textContent = email;
+            document.getElementById('trial-confirmed-date').textContent = date;
+            if (document.getElementById('trial-confirmed-type')) {
+                document.getElementById('trial-confirmed-type').textContent = type;
+            }
+
+            document.getElementById('trial-form-container').classList.add('hidden');
+            document.getElementById('trial-success-container').classList.remove('hidden');
+        }
+
+        // Close modal when clicking outside of it
+        window.addEventListener('click', (e) => {
+            const termsModal = document.getElementById('terms-modal');
+            if (e.target === termsModal) {
+                closeTermsModal();
+            }
+            const baaModal = document.getElementById('baa-modal');
+            if (e.target === baaModal) {
+                closeBaaModal();
+            }
+            const trialModal = document.getElementById('trial-modal');
+            if (e.target === trialModal) {
+                closeTrialModal();
+            }
+            const dispatchModal = document.getElementById('dispatch-modal');
+            if (e.target === dispatchModal) {
+                closeDispatchModal();
+            }
+        });
+
+        // PWA install handler
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        function promptAddToHomeScreen() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    deferredPrompt = null;
+                });
+            } else {
+                alert('To add a 1-tap shortcut on your device:\n\n• iPad / iPhone: Tap the Share button in Safari, then select "Add to Home Screen".\n• Android / Chrome: Tap the three dots menu, then choose "Add to Home screen" or "Install App".\n• Desktop / Workstation: Click the install icon in your browser address bar or bookmark this page.');
+            }
+        }
+    </script>
+</body>
+</html>
