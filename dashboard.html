@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVHLSP | Clinical Language Access Dashboard</title>
+    <meta name="description" content="Dedicated clinical dashboard for healthcare providers. Instant on-demand Medical Spanish human interpretation (OPI & VRI). Dedicated switchboard for hospitals, clinics, and triage desks.">
+    <link rel="icon" href="logo.jpg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800;900&display=swap');
+        body {
+            font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #0F172A;
+            background-color: #F8FAFC;
+        }
+        @media print {
+            body { background: white !important; }
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+        }
+        .print-only { display: none; }
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.85; transform: scale(1.02); }
+        }
+        .animate-live {
+            animation: pulse-subtle 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+
+    <!-- Top Institutional Banner & Clinical Navigation -->
+    <header class="bg-white border-b-2 border-[#105C7C] sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a href="/" class="flex items-center gap-2.5">
+                    <img src="logo.jpg" alt="MVHLSP Logo" class="h-8 w-auto rounded object-contain border border-slate-200" onerror="this.style.display='none'">
+                    <div>
+                        <span class="text-base sm:text-lg font-black tracking-tight text-[#105C7C] block leading-none">
+                            MVHLSP
+                        </span>
+                        <span class="text-[9px] font-bold uppercase tracking-wider text-slate-500 block mt-0.5">
+                            Clinical Language Switchboard
+                        </span>
+                    </div>
+                </a>
+                <span class="hidden md:inline-block h-6 w-px bg-slate-300 mx-2"></span>
+                <span class="hidden md:inline-block text-xs font-bold text-slate-600">
+                    Mountain Valley Healthcare Language Service Provider
+                </span>
+            </div>
+
+            <!-- Header Controls: Hotline, Live Roster Indicator & Agency Link -->
+            <div class="flex items-center gap-2 sm:gap-4">
+                <!-- Live Availability Badge -->
+                <div id="header-status-badge" class="flex items-center gap-2 px-3 py-1.5 bg-emerald-50 border border-emerald-300 rounded-lg text-emerald-800 shrink-0">
+                    <span class="relative flex h-2.5 w-2.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-600"></span>
+                    </span>
+                    <span id="header-status-text" class="text-[11px] font-extrabold uppercase tracking-wide">
+                        1,000+ Interpreters Ready
+                    </span>
+                </div>
+
+                <!-- Emergency Desk Telephone Line -->
+                <a href="tel:+19153392353" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-[#EEF6F9] hover:bg-[#C4DEE9]/50 border border-[#105C7C]/30 text-[#105C7C] rounded-lg text-xs font-black transition">
+                    <span aria-hidden="true">📞</span>
+                    <span>(915) 339-2353</span>
+                </a>
+
+                <a href="/" class="text-xs font-bold text-slate-600 hover:text-[#105C7C] transition px-2 py-1">
+                    Agency Portal &rarr;
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Clinical Dashboard Body -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
+
+        <!-- ================================================================= -->
+        <!-- ACTIVE ENCOUNTER SCREEN (IN-PAGE EMBEDDED STAGE - ACTIVATES ON DISPATCH) -->
+        <!-- ================================================================= -->
+        <section id="encounter-active-screen" class="hidden bg-slate-900 border-2 border-cyan-500 rounded-2xl shadow-2xl overflow-hidden transition-all duration-300">
+            <!-- Active Encounter Clinical Header -->
+            <div class="bg-slate-950 px-4 sm:px-6 py-3.5 border-b border-cyan-500/40 flex flex-wrap items-center justify-between gap-3 text-white">
+                <div class="flex items-center gap-3">
+                    <span class="relative flex h-3 w-3">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-80"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+                    </span>
+                    <div>
+                        <h2 class="text-sm sm:text-base font-black tracking-tight text-white flex items-center gap-2">
+                            <span>MVHLSP Secure Encounter Room</span>
+                            <span id="active-modality-badge" class="text-[10px] uppercase font-black px-2 py-0.5 rounded bg-cyan-900 text-cyan-200 border border-cyan-500/50">
+                                Video VRI
+                            </span>
+                        </h2>
+                        <p class="text-[11px] text-slate-400 font-semibold">
+                            Reference: <span id="active-ref-text" class="text-slate-200 font-bold">Exam Room 1</span> • 
+                            Session ID: <span id="active-session-id" class="text-cyan-300 font-mono">Connecting...</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Call Timer & Controls -->
+                <div class="flex items-center gap-3 sm:gap-4">
+                    <div class="bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-xl text-center">
+                        <span class="text-[10px] text-slate-400 font-bold uppercase block leading-none">Elapsed Time</span>
+                        <span id="active-timer-display" class="text-base sm:text-lg font-mono font-black text-emerald-400 leading-tight">
+                            00:00:00
+                        </span>
+                    </div>
+
+                    <!-- Direct Dial Backup -->
+                    <a href="tel:+19153392353" class="hidden md:inline-flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 rounded-xl transition" title="Direct Phone Escalation Hotline">
+                        <span>Hotline: (915) 339-2353</span>
+                    </a>
+
+                    <!-- End Call Button -->
+                    <button type="button" id="end-encounter-btn" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white text-xs sm:text-sm font-black uppercase tracking-wider rounded-xl shadow-lg transition flex items-center gap-1.5 cursor-pointer">
+                        <span>✕ End Encounter</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Embedded Live Video/Audio Frame -->
+            <div class="relative w-full bg-black aspect-video sm:aspect-auto sm:h-[680px]">
+                <div id="iframe-loading-overlay" class="absolute inset-0 bg-slate-950 flex flex-col items-center justify-center text-white z-10 transition-opacity">
+                    <div class="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+                    <p class="text-sm font-bold text-cyan-200 tracking-wide uppercase">Establishing Encrypted HIPAA Relay...</p>
+                    <p class="text-xs text-slate-400 mt-1">Connecting to certified medical Spanish human interpreter</p>
+                </div>
+
+                <iframe 
+                    id="encounter-iframe" 
+                    src="about:blank" 
+                    title="MVHLSP Clinical Spanish Interpretation Encounter" 
+                    class="w-full h-full border-0"
+                    allow="camera; microphone; display-capture; autoplay; encrypted-media; fullscreen"
+                ></iframe>
+            </div>
+
+            <!-- Clinical Security & Regulatory Micro-Bar -->
+            <div class="bg-slate-950 px-4 py-2 border-t border-slate-800 text-[10px] text-slate-400 flex flex-wrap items-center justify-between gap-2 font-medium">
+                <div class="flex items-center gap-3">
+                    <span class="text-emerald-400 font-bold">✔ HIPAA 45 CFR § 164.504(e) Conduit</span>
+                    <span>✔ Zero-Data-Trace (ZDT) Transient Audio/Video</span>
+                    <span>✔ $1.48/min per-second exact billing</span>
+                </div>
+                <div>
+                    Hospital Support Desk: <a href="tel:+19153392353" class="text-cyan-400 underline font-bold">(915) 339-2353</a>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================================================================= -->
+        <!-- DISPATCH CONSOLE (PRE-CALL DASHBOARD) -->
+        <!-- ================================================================= -->
+        <div id="dispatch-console-container" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- Left 7 Columns: Instant Dispatch Launcher -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <section class="bg-white border-2 border-[#105C7C] rounded-2xl p-6 sm:p-7 shadow-xl relative overflow-hidden" aria-label="Clinical Switchboard Launcher">
+                    <!-- Section Header -->
+                    <div class="flex items-start justify-between border-b border-slate-200 pb-4 mb-5 gap-3">
+                        <div>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-[#105C7C] bg-cyan-50 px-2.5 py-1 rounded border border-[#105C7C]/30 inline-block mb-1.5">
+                                Instant Patient Encounter
+                            </span>
+                            <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">
+                                Connect Medical Spanish Interpreter
+                            </h1>
+                            <p class="text-xs font-bold text-slate-600 mt-1">
+                                Certified human Spanish interpreters on demand. Zero downloads or app installation required.
+                            </p>
+                        </div>
+                        <div class="shrink-0 text-right">
+                            <span class="text-xs font-black text-slate-900 block">$1.48 / min</span>
+                            <span class="text-[10px] font-bold text-emerald-700 block">Exact-Second Billing</span>
+                        </div>
+                    </div>
+
+                    <!-- Dispatch Form -->
+                    <form id="dashboard-dispatch-form" class="space-y-5">
+                        
+                        <!-- Step 1: Modality Selection -->
+                        <div>
+                            <label class="block text-xs font-black uppercase tracking-wider text-slate-700 mb-2">
+                                1. Select Encounter Modality
+                            </label>
+                            <div class="grid grid-cols-2 gap-3" role="radiogroup" aria-label="Encounter Modality">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="call_type" value="audio" checked class="peer sr-only">
+                                    <div class="p-3.5 rounded-xl border-2 border-slate-200 bg-slate-50 peer-checked:border-[#105C7C] peer-checked:bg-[#EEF6F9] transition flex items-center gap-3">
+                                        <span class="text-2xl" aria-hidden="true">📞</span>
+                                        <div>
+                                            <p class="text-xs sm:text-sm font-black text-slate-900 leading-tight">Audio (OPI)</p>
+                                            <p class="text-[10px] text-slate-500 font-semibold mt-0.5">Immediate Voice Relay</p>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="call_type" value="video" class="peer sr-only">
+                                    <div class="p-3.5 rounded-xl border-2 border-slate-200 bg-slate-50 peer-checked:border-[#105C7C] peer-checked:bg-[#EEF6F9] transition flex items-center gap-3">
+                                        <span class="text-2xl" aria-hidden="true">📹</span>
+                                        <div>
+                                            <p class="text-xs sm:text-sm font-black text-slate-900 leading-tight">Video Remote (VRI)</p>
+                                            <p class="text-[10px] text-slate-500 font-semibold mt-0.5">Two-Way Visual & Spanish</p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Clinic Station / Patient Ref -->
+                        <div>
+                            <div class="flex items-center justify-between mb-1.5">
+                                <label for="dispatch-client-ref" class="block text-xs font-black uppercase tracking-wider text-slate-700">
+                                    2. Station Reference / Patient Chart ID
+                                </label>
+                                <span class="text-[11px] text-slate-500 font-semibold">(For clinical encounter log)</span>
+                            </div>
+                            <input 
+                                type="text" 
+                                id="dispatch-client-ref" 
+                                name="client_ref" 
+                                placeholder="e.g., Triage Desk A, Exam Room 4, Dr. Morales" 
+                                class="w-full px-4 py-3 rounded-xl bg-slate-50 border-2 border-slate-200 text-slate-900 font-bold text-xs sm:text-sm placeholder-slate-400 focus:outline-none focus:border-[#105C7C] focus:bg-white transition"
+                                value="Clinic Exam Room 1"
+                            >
+                        </div>
+
+                        <!-- Step 3: Clinical Department / Specialty (Optional) -->
+                        <div>
+                            <label for="dispatch-department" class="block text-xs font-black uppercase tracking-wider text-slate-700 mb-1.5">
+                                3. Clinical Department / Context
+                            </label>
+                            <select 
+                                id="dispatch-department" 
+                                name="department" 
+                                class="w-full px-4 py-2.5 rounded-xl bg-slate-50 border-2 border-slate-200 text-slate-900 font-bold text-xs sm:text-sm focus:outline-none focus:border-[#105C7C] transition"
+                            >
+                                <option value="General Clinical & Outpatient">General Clinical &amp; Outpatient Consult</option>
+                                <option value="Emergency & Trauma Triage">Emergency &amp; Trauma Triage</option>
+                                <option value="Pediatrics & Family Care">Pediatrics &amp; Family Care</option>
+                                <option value="OB/GYN & Labor & Delivery">OB/GYN &amp; Labor &amp; Delivery</option>
+                                <option value="Surgical Pre-Op & Post-Op">Surgical Pre-Op &amp; Post-Op Discharge</option>
+                                <option value="Behavioral Health & Counseling">Behavioral Health &amp; Psychiatric Intake</option>
+                            </select>
+                        </div>
+
+                        <!-- Primary Connect Button -->
+                        <button 
+                            type="submit" 
+                            id="dashboard-submit-btn" 
+                            class="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-[#105C7C] to-[#156D93] hover:from-[#0E4B65] hover:to-[#105C7C] active:scale-[0.99] text-white font-black text-sm sm:text-base uppercase tracking-wider shadow-xl shadow-[#105C7C]/20 flex items-center justify-center gap-2 cursor-pointer transition"
+                        >
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span>Connect Medical Spanish Interpreter Now</span>
+                            <span aria-hidden="true">&rarr;</span>
+                        </button>
+
+                        <!-- Live Status Banner & Feedback -->
+                        <div id="dashboard-dispatch-alert" class="hidden text-center text-xs font-bold py-2.5 px-4 rounded-xl" aria-live="polite"></div>
+
+                    </form>
+                </section>
+
+                <!-- Shift Encounter Log (Saved locally in session for shift handoffs) -->
+                <section class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm" aria-label="Shift Encounter Log">
+                    <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-base" aria-hidden="true">📋</span>
+                            <h2 class="text-xs font-black uppercase text-slate-800 tracking-wider">
+                                Today's Shift Encounter Log
+                            </h2>
+                        </div>
+                        <button type="button" onclick="clearShiftLog()" class="text-[10px] text-slate-500 hover:text-rose-600 font-bold transition cursor-pointer">
+                            Clear Log
+                        </button>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="text-[10px] uppercase font-black text-slate-400 border-b border-slate-100">
+                                    <th class="pb-2">Time</th>
+                                    <th class="pb-2">Reference</th>
+                                    <th class="pb-2">Modality</th>
+                                    <th class="pb-2">Duration</th>
+                                    <th class="pb-2 text-right">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="encounter-log-body" class="divide-y divide-slate-100 font-medium text-slate-700">
+                                <tr id="empty-log-row">
+                                    <td colspan="5" class="py-4 text-center text-slate-400 text-xs">
+                                        No encounters logged yet during this shift.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- Right 5 Columns: Hospital Telephone Quick-Dial & Institutional Info -->
+            <div class="lg:col-span-5 space-y-6">
+
+                <!-- Physical Telephone Hardware Quick-Dial Card (OPI) -->
+                <section class="bg-white border-2 border-slate-300 rounded-2xl p-5 sm:p-6 shadow-sm" aria-label="Hospital Desk Phone Quick Reference">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center gap-2">
+                            <span>📞</span>
+                            <span>Hospital Desk Phone Access (OPI)</span>
+                        </h2>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase bg-slate-100 px-2 py-0.5 rounded">
+                            Any Handset
+                        </span>
+                    </div>
+
+                    <p class="text-xs text-slate-600 font-semibold mb-4">
+                        Connect nurses, physicians, and Spanish-speaking patients from any hospital analog, VoIP, or nurse-station telephone:
+                    </p>
+
+                    <div class="space-y-3">
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] uppercase font-bold text-slate-500 block">Step 1: Direct Hotline</span>
+                                <a href="tel:+19153392353" class="text-base font-black text-[#105C7C] hover:underline">
+                                    (915) 339-2353
+                                </a>
+                            </div>
+                            <span class="text-xs font-bold text-slate-500">Texas Switchboard</span>
+                        </div>
+
+                        <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] uppercase font-bold text-slate-500 block">Step 2: Enter Facility PIN</span>
+                                <span class="text-base font-mono font-black text-slate-800 tracking-widest">####</span>
+                            </div>
+                            <a href="mailto:info@mvhlsp.site?subject=Institutional%20PIN%20Request" class="text-[10px] font-bold text-[#105C7C] underline">
+                                Request Facility PIN
+                            </a>
+                        </div>
+
+                        <div class="p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between text-emerald-900">
+                            <div>
+                                <span class="text-[10px] uppercase font-bold text-emerald-700 block">Step 3: Instant Human Relay</span>
+                                <span class="text-sm font-black">Certified Spanish Interpreter</span>
+                            </div>
+                            <span class="text-xs font-bold text-emerald-700">Live Voice Bridge</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-slate-200 text-center no-print">
+                        <button type="button" onclick="window.print()" class="text-xs font-bold text-slate-600 hover:text-slate-900 underline cursor-pointer">
+                            🖨 Print Front-Desk Phone Card
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Billing & Provider Transparency Card -->
+                <section class="bg-gradient-to-br from-[#EEF6F9] to-cyan-50 border border-[#C4DEE9] rounded-2xl p-5 shadow-sm text-slate-800 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-black uppercase tracking-wider bg-[#105C7C] text-white px-2 py-0.5 rounded">
+                            Provider Standard
+                        </span>
+                        <span class="text-xs font-black text-[#105C7C]">$1.48 / min</span>
+                    </div>
+
+                    <h3 class="text-sm font-black text-slate-900">
+                        "We are NOT hiring, we are PROVIDING."
+                    </h3>
+
+                    <p class="text-xs font-medium text-slate-700 leading-relaxed">
+                        MVHLSP provides specialized medical Spanish interpretation on an on-demand, exact-second billing schedule ($0.0247/sec). Zero monthly retainers. Zero upfront minimum platform fees.
+                    </p>
+
+                    <div class="pt-2 border-t border-[#C4DEE9]/60 flex flex-wrap items-center justify-between text-[11px] font-bold text-slate-600 gap-2">
+                        <span>✔ HIPAA 45 CFR § 164.504(e)</span>
+                        <span>✔ CMS Fraud, Waste &amp; Abuse</span>
+                        <span>✔ ACA Section 1557</span>
+                    </div>
+                </section>
+
+                <!-- Executive Portfolio Link -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-4 text-center">
+                    <p class="text-xs text-slate-500 font-semibold">
+                        Founder &amp; Executive Credentials:
+                    </p>
+                    <a href="https://adg.mvhlsp.site" target="_blank" rel="noopener noreferrer" class="text-xs font-black text-[#105C7C] hover:underline mt-0.5 inline-block">
+                        Alejandro Díaz Guerrero (adg.mvhlsp.site) &rarr;
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 font-semibold no-print">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+            <div>
+                &copy; 2026 Mountain Valley Healthcare Language Service Provider (MVHLSP). All rights reserved.
+            </div>
+            <div class="flex items-center gap-4 text-[11px]">
+                <a href="/terms" class="hover:underline">Terms of Service</a>
+                <span>•</span>
+                <a href="mailto:info@mvhlsp.site" class="hover:underline">Contact Executive Office: info@mvhlsp.site</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================================================================= -->
+    <!-- CLIENT JAVASCRIPT AUTOMATION ENGINE -->
+    <!-- ================================================================= -->
+    <script>
+        // State variables
+        let callStartTime = null;
+        let callTimerInterval = null;
+        let activeEncounterId = null;
+        let activeModality = 'audio';
+        let activeReference = '';
+
+        // 1. Availability check on page mount
+        async function fetchLiveAvailability() {
+            try {
+                const res = await fetch('/api/availability');
+                if (res.ok) {
+                    const data = await res.json();
+                    const statusText = document.getElementById('header-status-text');
+                    let count = 1049;
+                    if (data && data.data && data.data[0] && data.data[0].interpreters_total) {
+                        count = data.data[0].interpreters_total;
+                    }
+                    if (statusText) {
+                        statusText.textContent = `${count} Interpreters Ready`;
+                    }
+                }
+            } catch (e) {
+                // Silently keep default high-availability badge
+            }
+        }
+        fetchLiveAvailability();
+        setInterval(fetchLiveAvailability, 30000);
+
+        // 2. URL Parameter pre-selection (e.g., /dashboard?type=video)
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const typeParam = urlParams.get('type');
+            if (typeParam === 'video') {
+                const videoRadio = document.querySelector('input[name="call_type"][value="video"]');
+                if (videoRadio) videoRadio.checked = true;
+            } else if (typeParam === 'audio') {
+                const audioRadio = document.querySelector('input[name="call_type"][value="audio"]');
+                if (audioRadio) audioRadio.checked = true;
+            }
+            renderShiftLog();
+        });
+
+        // 3. Form Dispatch Handler
+        document.getElementById('dashboard-dispatch-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('dashboard-submit-btn');
+            const alertBox = document.getElementById('dashboard-dispatch-alert');
+            const callType = document.querySelector('input[name="call_type"]:checked').value;
+            const refVal = document.getElementById('dispatch-client-ref').value.trim() || 'Clinic Station 1';
+            const department = document.getElementById('dispatch-department').value;
+
+            activeModality = callType;
+            activeReference = refVal;
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></span> <span>Contacting Switchboard...</span>';
+            
+            alertBox.classList.remove('hidden', 'bg-rose-100', 'text-rose-800');
+            alertBox.classList.add('bg-cyan-50', 'text-cyan-800', 'border', 'border-cyan-200');
+            alertBox.textContent = 'Allocating encrypted channel to frontline Spanish medical interpreter...';
+
+            try {
+                const response = await fetch('/api/dispatch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        call_type: callType,
+                        client_name: refVal,
+                        notes: `Department: ${department} • Dispatched from MVHLSP Clinical Dashboard`,
+                        external_reference: `MV-${Date.now()}`
+                    })
+                });
+
+                const data = await response.json();
+                if (!response.ok || !data.join_url) {
+                    throw new Error(data.error || 'Switchboard did not issue a secure encounter token.');
+                }
+
+                activeEncounterId = data.id || `ENC-${Date.now()}`;
+                
+                alertBox.classList.remove('bg-cyan-50', 'text-cyan-800', 'border-cyan-200');
+                alertBox.classList.add('bg-emerald-50', 'text-emerald-800', 'border', 'border-emerald-200');
+                alertBox.textContent = 'Encounter allocated! Launching secure clinical room...';
+
+                // Transition UI to the Active Encounter Screen (In-Page)
+                launchActiveEncounter(data.join_url);
+
+            } catch (err) {
+                alertBox.classList.remove('bg-cyan-50', 'text-cyan-800', 'border-cyan-200');
+                alertBox.classList.add('bg-rose-50', 'text-rose-800', 'border', 'border-rose-200');
+                alertBox.innerHTML = `<span>Notice: ${err.message}</span><br><span class="text-[11px] mt-1 inline-block">Telephone Backup Line Available: <a href="tel:+19153392353" class="underline font-bold text-rose-900">(915) 339-2353</a></span>`;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span> <span>Connect Medical Spanish Interpreter Now</span> <span aria-hidden="true">&rarr;</span>';
+            }
+        });
+
+        // 4. In-Page Encounter Launcher
+        function launchActiveEncounter(joinUrl) {
+            const screen = document.getElementById('encounter-active-screen');
+            const iframe = document.getElementById('encounter-iframe');
+            const overlay = document.getElementById('iframe-loading-overlay');
+            const consoleContainer = document.getElementById('dispatch-console-container');
+            const badge = document.getElementById('active-modality-badge');
+            const refText = document.getElementById('active-ref-text');
+            const sessId = document.getElementById('active-session-id');
+
+            badge.textContent = activeModality === 'video' ? 'Video (VRI)' : 'Audio (OPI)';
+            badge.className = activeModality === 'video' 
+                ? 'text-[10px] uppercase font-black px-2 py-0.5 rounded bg-cyan-900 text-cyan-200 border border-cyan-500/50' 
+                : 'text-[10px] uppercase font-black px-2 py-0.5 rounded bg-emerald-900 text-emerald-200 border border-emerald-500/50';
+            
+            refText.textContent = activeReference;
+            sessId.textContent = activeEncounterId;
+
+            // Show active encounter screen and smoothly scroll into view
+            screen.classList.remove('hidden');
+            overlay.classList.remove('hidden', 'opacity-0');
+            screen.scrollIntoView({ behavior: 'smooth' });
+
+            iframe.src = joinUrl;
+            iframe.onload = () => {
+                setTimeout(() => {
+                    overlay.classList.add('opacity-0');
+                    setTimeout(() => overlay.classList.add('hidden'), 300);
+                }, 1000);
+            };
+
+            // Start encounter timer
+            startTimer();
+        }
+
+        // 5. Timer Engine
+        function startTimer() {
+            callStartTime = Date.now();
+            const timerDisplay = document.getElementById('active-timer-display');
+            if (callTimerInterval) clearInterval(callTimerInterval);
+
+            callTimerInterval = setInterval(() => {
+                const elapsedSec = Math.floor((Date.now() - callStartTime) / 1000);
+                const hrs = String(Math.floor(elapsedSec / 3600)).padStart(2, '0');
+                const mins = String(Math.floor((elapsedSec % 3600) / 60)).padStart(2, '0');
+                const secs = String(elapsedSec % 60).padStart(2, '0');
+                timerDisplay.textContent = `${hrs}:${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (callTimerInterval) {
+                clearInterval(callTimerInterval);
+                callTimerInterval = null;
+            }
+            if (!callStartTime) return '00:00';
+            const totalSec = Math.floor((Date.now() - callStartTime) / 1000);
+            const mins = String(Math.floor(totalSec / 60)).padStart(2, '0');
+            const secs = String(totalSec % 60).padStart(2, '0');
+            return `${mins}:${secs}`;
+        }
+
+        // 6. End Encounter Action
+        document.getElementById('end-encounter-btn').addEventListener('click', () => {
+            if (confirm('Are you sure you want to conclude this clinical interpretation encounter?')) {
+                concludeEncounter();
+            }
+        });
+
+        function concludeEncounter() {
+            const finalDuration = stopTimer();
+            const screen = document.getElementById('encounter-active-screen');
+            const iframe = document.getElementById('encounter-iframe');
+
+            // Log encounter locally
+            addEncounterToLog({
+                id: activeEncounterId,
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                ref: activeReference,
+                modality: activeModality.toUpperCase(),
+                duration: finalDuration
+            });
+
+            // Reset iframe and hide active screen
+            iframe.src = 'about:blank';
+            screen.classList.add('hidden');
+
+            // Reset header timer
+            document.getElementById('active-timer-display').textContent = '00:00:00';
+            
+            // Re-render log
+            renderShiftLog();
+
+            alert(`Clinical encounter concluded.\nTotal Duration: ${finalDuration}\nLogged into Shift History.`);
+        }
+
+        // 7. Shift Encounter Log Functions
+        function getShiftLog() {
+            try {
+                return JSON.parse(sessionStorage.getItem('mvhlsp_shift_log') || '[]');
+            } catch(e) {
+                return [];
+            }
+        }
+
+        function addEncounterToLog(entry) {
+            const log = getShiftLog();
+            log.unshift(entry);
+            sessionStorage.setItem('mvhlsp_shift_log', JSON.stringify(log));
+        }
+
+        function clearShiftLog() {
+            if (confirm('Clear the local shift encounter log?')) {
+                sessionStorage.removeItem('mvhlsp_shift_log');
+                renderShiftLog();
+            }
+        }
+
+        function renderShiftLog() {
+            const tbody = document.getElementById('encounter-log-body');
+            const log = getShiftLog();
+            if (!tbody) return;
+
+            if (log.length === 0) {
+                tbody.innerHTML = `
+                    <tr id="empty-log-row">
+                        <td colspan="5" class="py-4 text-center text-slate-400 text-xs">
+                            No encounters logged yet during this shift.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = log.map(entry => `
+                <tr class="hover:bg-slate-50 transition">
+                    <td class="py-2.5 font-bold text-slate-800">${entry.time}</td>
+                    <td class="py-2.5 text-slate-700 font-semibold">${entry.ref}</td>
+                    <td class="py-2.5">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase ${entry.modality === 'VIDEO' ? 'bg-cyan-100 text-cyan-800' : 'bg-emerald-100 text-emerald-800'}">
+                            ${entry.modality}
+                        </span>
+                    </td>
+                    <td class="py-2.5 font-mono font-bold text-slate-800">${entry.duration}</td>
+                    <td class="py-2.5 text-right font-bold text-emerald-700">Completed</td>
+                </tr>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
