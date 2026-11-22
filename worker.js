@@ -32,7 +32,7 @@ export default {
         service: 'MVHLSP Clinical Language Switchboard',
         worker: 'mvhlsp',
         domain: 'mvhlsp.site',
-        hotline: '+19153392353',
+        support: 'info@mvhlsp.site',
         timestamp: new Date().toISOString()
       }), {
         headers: {
@@ -98,8 +98,8 @@ export default {
       const apiKey = env.REMOTO_API_KEY;
       if (!apiKey) {
         return new Response(JSON.stringify({
-          error: 'Switchboard key unconfigured on edge worker. Direct telephone hotline: (915) 339-2353',
-          hotline: '+19153392353'
+          error: 'Switchboard key unconfigured on edge worker. Clinical support desk: info@mvhlsp.site',
+          support: 'info@mvhlsp.site'
         }), {
           status: 503,
           headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
@@ -135,7 +135,7 @@ export default {
         const data = await resp.json();
         if (!resp.ok) {
           const errMsg = data.error?.message || (typeof data.error === 'string' ? data.error : 'Dispatch switchboard error');
-          return new Response(JSON.stringify({ error: errMsg, code: resp.status, hotline: '+19153392353' }), {
+          return new Response(JSON.stringify({ error: errMsg, code: resp.status, support: 'info@mvhlsp.site' }), {
             status: resp.status,
             headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
           });
@@ -154,7 +154,7 @@ export default {
         });
 
       } catch (err) {
-        return new Response(JSON.stringify({ error: err.message, hotline: '+19153392353' }), {
+        return new Response(JSON.stringify({ error: err.message, support: 'info@mvhlsp.site' }), {
           status: 500,
           headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
         });
@@ -218,7 +218,7 @@ export default {
     }
 
     // Fallback response if assets are not loaded
-    return new Response('MVHLSP Clinical Language Access Portal is initializing. Please reload or contact hotline: (915) 339-2353.', {
+    return new Response('MVHLSP Clinical Language Access Portal is initializing. Please reload or contact support: info@mvhlsp.site.', {
       status: 200,
       headers: { 'Content-Type': 'text/plain; charset=UTF-8' }
     });

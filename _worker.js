@@ -74,8 +74,8 @@ export default {
       const apiKey = env.REMOTO_API_KEY;
       if (!apiKey) {
         return new Response(JSON.stringify({
-          error: 'Switchboard key unconfigured on worker environment. Please dial hotline: (915) 339-2353',
-          hotline: '+19153392353'
+          error: 'Switchboard key unconfigured on worker environment. Please contact support: info@mvhlsp.site',
+          support: 'info@mvhlsp.site'
         }), {
           status: 503,
           headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }

@@ -65,10 +65,10 @@
                     </span>
                 </div>
 
-                <!-- Emergency Desk Telephone Line -->
-                <a href="tel:+19153392353" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-[#EEF6F9] hover:bg-[#C4DEE9]/50 border border-[#105C7C]/30 text-[#105C7C] rounded-lg text-xs font-black transition">
-                    <span aria-hidden="true">📞</span>
-                    <span>(915) 339-2353</span>
+                <!-- Clinical Desk Inquiries -->
+                <a href="mailto:info@mvhlsp.site" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-[#EEF6F9] hover:bg-[#C4DEE9]/50 border border-[#105C7C]/30 text-[#105C7C] rounded-lg text-xs font-black transition" title="Clinical Dispatch Desk Email">
+                    <span aria-hidden="true">✉</span>
+                    <span>info@mvhlsp.site</span>
                 </a>
 
                 <a href="/" class="text-xs font-bold text-slate-600 hover:text-[#105C7C] transition px-2 py-1">
@@ -115,9 +115,10 @@
                         </span>
                     </div>
 
-                    <!-- Direct Dial Backup -->
-                    <a href="tel:+19153392353" class="hidden md:inline-flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 rounded-xl transition" title="Direct Phone Escalation Hotline">
-                        <span>Hotline: (915) 339-2353</span>
+                    <!-- Clinical Support Desk -->
+                    <a href="mailto:info@mvhlsp.site" class="hidden md:inline-flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 rounded-xl transition" title="Clinical Support Desk">
+                        <span class="text-cyan-400">✉</span>
+                        <span>Support: info@mvhlsp.site</span>
                     </a>
 
                     <!-- End Call Button -->
@@ -152,7 +153,7 @@
                     <span>✔ $1.48/min per-second exact billing</span>
                 </div>
                 <div>
-                    Hospital Support Desk: <a href="tel:+19153392353" class="text-cyan-400 underline font-bold">(915) 339-2353</a>
+                    Hospital Support Desk: <a href="mailto:info@mvhlsp.site" class="text-cyan-400 underline font-bold">info@mvhlsp.site</a>
                 </div>
             </div>
         </section>
@@ -332,12 +333,12 @@
                     <div class="space-y-3">
                         <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
                             <div>
-                                <span class="text-[10px] uppercase font-bold text-slate-500 block">Step 1: Direct Hotline</span>
-                                <a href="tel:+19153392353" class="text-base font-black text-[#105C7C] hover:underline">
-                                    (915) 339-2353
-                                </a>
+                                <span class="text-[10px] uppercase font-bold text-slate-500 block">Step 1: Dedicated Inbound Dial-In</span>
+                                <span class="text-sm font-black text-[#105C7C]">
+                                    Provisioning via Remoto
+                                </span>
                             </div>
-                            <span class="text-xs font-bold text-slate-500">Texas Switchboard</span>
+                            <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Remoto OPI Channel</span>
                         </div>
 
                         <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
@@ -511,7 +512,7 @@
             } catch (err) {
                 alertBox.classList.remove('bg-cyan-50', 'text-cyan-800', 'border-cyan-200');
                 alertBox.classList.add('bg-rose-50', 'text-rose-800', 'border', 'border-rose-200');
-                alertBox.innerHTML = `<span>Notice: ${err.message}</span><br><span class="text-[11px] mt-1 inline-block">Telephone Backup Line Available: <a href="tel:+19153392353" class="underline font-bold text-rose-900">(915) 339-2353</a></span>`;
+                alertBox.innerHTML = `<span>Notice: ${err.message}</span><br><span class="text-[11px] mt-1 inline-block">Clinical Support Desk Available: <a href="mailto:info@mvhlsp.site" class="underline font-bold text-rose-900">info@mvhlsp.site</a></span>`;
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = '<span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span> <span>Connect Medical Spanish Interpreter Now</span> <span aria-hidden="true">&rarr;</span>';
