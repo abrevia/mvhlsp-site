@@ -3,137 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MVHLSP | Clinical Quick-Dial Reference Card</title>
+    <title>MVHLSP | Clinical Quick-Dial & On-Demand Dispatch Portal</title>
+    <meta name="description" content="Direct, HIPAA-compliant on-demand Medical Spanish human interpretation dispatch (OPI & VRI). Dedicated clinical switchboard for hospitals, clinics, and triage desks.">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700;800;900&display=swap');
         body {
-            font-family: 'Public Sans', -apple-system, sans-serif;
-            color: #111827;
+            font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #0F172A;
+            background-color: #F8FAFC;
         }
         @media print {
-            body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+            body { print-color-adjust: exact; -webkit-print-color-adjust: exact; background-color: #FFFFFF; }
             .no-print { display: none !important; }
+            .print-card { border: 2px solid #105C7C !important; box-shadow: none !important; }
         }
     </style>
 </head>
-<body class="bg-slate-100 p-4 sm:p-8 flex justify-center items-center min-h-screen">
+<body class="p-3 sm:p-6 md:p-8 flex justify-center items-center min-h-screen">
 
-    <div class="max-w-2xl w-full bg-white border-2 border-[#105C7C] rounded-2xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
-        <!-- Top Banner -->
-        <div class="flex items-center justify-between border-b-2 border-[#105C7C] pb-4 mb-6">
+    <main class="print-card max-w-2xl w-full bg-white border-2 border-[#105C7C] rounded-2xl p-5 sm:p-8 shadow-2xl relative overflow-hidden">
+        
+        <!-- Top Institutional Header -->
+        <header class="flex flex-col sm:flex-row sm:items-center justify-between border-b-2 border-[#105C7C] pb-4 mb-6 gap-3">
             <div>
-                <span class="text-xs font-black tracking-widest uppercase text-[#105C7C] bg-cyan-50 px-2.5 py-1 rounded border border-[#105C7C]">
-                    Clinical Language Access Reference
+                <span class="text-[11px] font-black tracking-widest uppercase text-[#105C7C] bg-cyan-50 px-2.5 py-1 rounded border border-[#105C7C]/40 inline-block mb-1.5">
+                    Clinical Language Access Switchboard
                 </span>
-                <h1 class="text-2xl sm:text-3xl font-black text-slate-900 mt-2 tracking-tight">
+                <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">
                     MVHLSP Medical Spanish Dispatch
                 </h1>
-                <p class="text-xs font-bold text-slate-600 mt-0.5">
+                <p class="text-xs font-bold text-slate-600 mt-1">
                     Mountain Valley Healthcare Language Service Provider • 100% Certified Human Interpreters
                 </p>
             </div>
-            <div class="text-right shrink-0">
-                <span class="inline-block bg-emerald-100 text-emerald-800 text-[11px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider">
-                    ● On-Demand Connect
+            
+            <!-- Real-Time Switchboard Status Badge -->
+            <div id="status-badge" class="flex items-center gap-2.5 px-3.5 py-2 bg-emerald-50 border border-emerald-300 rounded-xl shrink-0 self-start sm:self-center">
+                <span class="relative flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-600"></span>
+                </span>
+                <div>
+                    <p id="status-text-title" class="text-[11px] font-black uppercase tracking-wider text-emerald-800 leading-none">Roster Ready</p>
+                    <p id="status-text-sub" class="text-[10px] font-bold text-emerald-700 mt-0.5">1,000+ Interpreters Online</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- 1-Tap On-Demand Digital Dispatch Console (The Web Switchboard) -->
+        <section class="bg-slate-900 border-2 border-cyan-500/50 rounded-2xl p-5 sm:p-6 mb-6 text-white shadow-lg" aria-label="Instant Encounter Launcher">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h2 class="text-base sm:text-lg font-black tracking-tight text-white flex items-center gap-2">
+                        <span class="text-cyan-400" aria-hidden="true">⚡</span>
+                        <span>Instant Clinical Encounter Launcher</span>
+                    </h2>
+                    <p class="text-xs text-slate-300 font-medium mt-0.5">
+                        Encrypted browser audio/video relay directly to active Spanish medical interpreters.
+                    </p>
+                </div>
+                <span class="hidden sm:inline-block text-[10px] font-black uppercase tracking-wider bg-cyan-950 text-cyan-300 px-2.5 py-1 rounded border border-cyan-500/40">
+                    Per-Second Billing
                 </span>
             </div>
-        </div>
 
-        <!-- 3-Step Dialing Instructions -->
-        <div class="space-y-4 mb-6">
-            <h2 class="text-sm font-black uppercase text-slate-700 tracking-wider">
-                Instant Clinical Phone Connection (OPI)
+            <form id="switchboard-dispatch-form" class="space-y-4">
+                <!-- Modality Toggle -->
+                <div>
+                    <label class="block text-xs font-black uppercase tracking-wider text-slate-300 mb-2">
+                        Step 1: Select Encounter Modality
+                    </label>
+                    <div class="grid grid-cols-2 gap-3" role="radiogroup" aria-label="Encounter Modality">
+                        <label class="cursor-pointer">
+                            <input type="radio" name="call_type" value="audio" checked class="peer sr-only">
+                            <div class="p-3.5 rounded-xl border-2 border-slate-700 bg-slate-800 peer-checked:border-cyan-400 peer-checked:bg-cyan-950/60 transition flex items-center gap-3">
+                                <span class="text-xl" aria-hidden="true">📞</span>
+                                <div>
+                                    <p class="text-xs sm:text-sm font-black text-white leading-tight">Audio Only (OPI)</p>
+                                    <p class="text-[10px] text-slate-400 font-semibold mt-0.5">Immediate Voice Relay</p>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="call_type" value="video" class="peer sr-only">
+                            <div class="p-3.5 rounded-xl border-2 border-slate-700 bg-slate-800 peer-checked:border-cyan-400 peer-checked:bg-cyan-950/60 transition flex items-center gap-3">
+                                <span class="text-xl" aria-hidden="true">📹</span>
+                                <div>
+                                    <p class="text-xs sm:text-sm font-black text-white leading-tight">Video Remote (VRI)</p>
+                                    <p class="text-[10px] text-slate-400 font-semibold mt-0.5">Two-Way Visual & Spanish</p>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Clinic / Encounter Reference -->
+                <div>
+                    <label for="client-reference" class="block text-xs font-black uppercase tracking-wider text-slate-300 mb-1.5">
+                        Step 2: Encounter Reference / Triage ID <span class="text-slate-400 font-normal">(Optional)</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="client-reference" 
+                        name="client_reference" 
+                        placeholder="e.g., Triage Desk A, Exam Room 3, Dr. Morales" 
+                        class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border-2 border-slate-700 text-white font-semibold text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition"
+                    >
+                </div>
+
+                <!-- Connect Button -->
+                <button 
+                    type="submit" 
+                    id="dispatch-btn" 
+                    class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-cyan-500 to-[#105C7C] hover:from-cyan-400 hover:to-[#156D93] active:scale-[0.99] text-white font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 cursor-pointer transition"
+                >
+                    <span>Connect Interpreter Now</span>
+                    <span aria-hidden="true">→</span>
+                </button>
+
+                <div id="dispatch-alert" class="hidden text-center text-xs font-bold py-2 rounded-lg" aria-live="polite"></div>
+            </form>
+        </section>
+
+        <!-- 3-Step Dialing Instructions for Telephone Hardware (OPI) -->
+        <section class="space-y-3 mb-6" aria-label="Telephonic Handset Access">
+            <h2 class="text-xs font-black uppercase text-slate-700 tracking-wider flex items-center justify-between">
+                <span>Direct Hospital Desk Phone & Handset Access (OPI)</span>
+                <span class="text-[10px] text-slate-500 font-bold">Standard Analog / VoIP / DECT</span>
             </h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-center">
                     <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-[#105C7C] text-white font-black text-xs mb-1.5">1</span>
-                    <p class="text-xs font-bold text-slate-500 uppercase">Dial Direct Hotline</p>
-                    <p class="text-sm font-black text-slate-900 mt-0.5">Toll-Free Dispatch</p>
-                    <p class="text-[11px] text-slate-600 font-semibold">(Provisioned Line)</p>
+                    <p class="text-[11px] font-bold text-slate-500 uppercase">Dial Direct Line</p>
+                    <a href="tel:+19153392353" class="text-sm font-black text-[#105C7C] hover:underline mt-0.5 block">
+                        (915) 339-2353
+                    </a>
+                    <p class="text-[10px] text-slate-500 font-semibold mt-0.5">Texas Medical Switchboard</p>
                 </div>
 
                 <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-center">
                     <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-[#105C7C] text-white font-black text-xs mb-1.5">2</span>
-                    <p class="text-xs font-bold text-slate-500 uppercase">Enter Clinic PIN</p>
+                    <p class="text-[11px] font-bold text-slate-500 uppercase">Enter Facility PIN</p>
                     <p class="text-sm font-black text-[#105C7C] mt-0.5 tracking-widest">####</p>
-                    <p class="text-[11px] text-slate-600 font-semibold">(Instant Auth)</p>
+                    <p class="text-[10px] text-slate-500 font-semibold mt-0.5">Instant Authentication</p>
                 </div>
 
                 <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-center">
                     <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-[#105C7C] text-white font-black text-xs mb-1.5">3</span>
-                    <p class="text-xs font-bold text-slate-500 uppercase">Connect Interpreter</p>
-                    <p class="text-sm font-black text-emerald-700 mt-0.5">&lt; 15 Seconds</p>
-                    <p class="text-[11px] text-slate-600 font-semibold">Certified Human</p>
+                    <p class="text-[11px] font-bold text-slate-500 uppercase">Human Interpreter</p>
+                    <p class="text-sm font-black text-emerald-700 mt-0.5">Active Relay</p>
+                    <p class="text-[10px] text-slate-500 font-semibold mt-0.5">Certified Spanish Specialist</p>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- 15-Minute Complimentary Clinical Trial via Remoto -->
-        <div class="bg-cyan-50 border-2 border-dashed border-[#105C7C] rounded-xl p-4 mb-6">
-            <div class="flex items-center justify-between">
-                <div>
-                    <span class="text-[10px] font-black uppercase tracking-wider bg-[#105C7C] text-white px-2 py-0.5 rounded">
-                        Remoto Enterprise Evaluation
-                    </span>
-                    <h3 class="text-sm font-black text-slate-900 mt-1">
-                        15-Minute Complimentary Clinical Interpreting
-                    </h3>
-                    <p class="text-[11px] font-semibold text-slate-600">
-                        Zero setup fees • No credit card required • Served directly through our Remoto clinical infrastructure
-                    </p>
-                </div>
-                <div class="text-right shrink-0 ml-3">
-                    <a href="https://www.proz.com/remoto/b/mvhlsp" target="_blank" class="text-xs font-bold text-white bg-[#105C7C] hover:bg-[#156D93] px-3 py-1.5 rounded-lg shadow-sm transition inline-block">
-                        Remoto Portal →
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Web Portal & Video (VRI) Dispatch -->
-        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <!-- Pricing & Operational Transparency -->
+        <div class="bg-cyan-50/70 border border-[#105C7C]/30 rounded-xl p-4 mb-6 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div>
-                <h3 class="text-xs font-black uppercase text-slate-800 tracking-wider">
-                    Web Dispatch & Video Remote Interpreting (VRI)
-                </h3>
-                <p class="text-xs text-slate-600 font-medium mt-0.5">
-                    Access 1-tap browser audio/video dispatch on any tablet, iPad, or workstation:
+                <span class="text-[10px] font-black uppercase tracking-wider bg-[#105C7C] text-white px-2 py-0.5 rounded">
+                    Operating Principle
+                </span>
+                <p class="text-xs font-black text-slate-900 mt-1">
+                    "We are NOT hiring, we are PROVIDING."
                 </p>
-                <p class="text-sm font-black text-[#105C7C] mt-1">
-                    https://mvhlsp.site
+                <p class="text-[11px] font-semibold text-slate-600 mt-0.5">
+                    Transparent $1.48/min ($0.0247/sec) billing strictly for active encounter time. Zero minimums. Zero monthly retainers.
                 </p>
             </div>
-            <div class="shrink-0 text-center">
-                <a href="https://mvhlsp.site" target="_blank" class="inline-block bg-[#105C7C] hover:bg-[#156D93] text-white font-bold text-xs px-4 py-2 rounded-lg shadow-sm transition">
-                    Open Web Portal →
+            <div class="shrink-0 text-right">
+                <a href="mailto:info@mvhlsp.site?subject=Institutional%20PIN%20Request" class="text-xs font-bold text-[#105C7C] hover:text-[#156D93] underline block">
+                    Request Facility PIN →
                 </a>
             </div>
         </div>
 
         <!-- Compliance & Regulatory Footer -->
-        <div class="border-t border-slate-200 pt-4 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 font-semibold gap-2">
-            <div class="flex items-center gap-3">
-                <span>✔ HIPAA 45 CFR § 164.504(e) Compliant</span>
-                <span>✔ CMS Fraud, Waste & Abuse Safeguards</span>
-                <span>✔ Section 1557 ACA</span>
+        <footer class="border-t border-slate-200 pt-4 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 font-semibold gap-2">
+            <div class="flex flex-wrap items-center gap-3">
+                <span>✔ HIPAA 45 CFR § 164.504(e)</span>
+                <span>✔ CMS Fraud, Waste &amp; Abuse</span>
+                <span>✔ ACA Section 1557</span>
             </div>
             <div>
-                Verified Portfolio: <a href="https://adg.mvhlsp.site" class="text-[#105C7C] underline font-bold">adg.mvhlsp.site</a>
+                Verified Executive Portfolio: <a href="https://adg.mvhlsp.site" class="text-[#105C7C] underline font-bold">adg.mvhlsp.site</a>
             </div>
-        </div>
+        </footer>
 
-        <!-- Print Action Button (Hidden during print) -->
+        <!-- Print & Navigation Actions (Hidden during print) -->
         <div class="mt-6 text-center no-print flex items-center justify-center gap-3">
-            <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-md transition cursor-pointer">
+            <button type="button" onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-md transition cursor-pointer">
                 🖨 Print Front-Desk Card
             </button>
             <a href="/" class="text-xs text-slate-600 hover:text-[#105C7C] font-bold py-2 px-3 transition">
                 ← Return to Agency Portal
             </a>
         </div>
-    </div>
+    </main>
 
+    <!-- Client-Side Dispatch & Availability Automation Script -->
+    <script>
+        // Check availability on load
+        async function checkAvailability() {
+            try {
+                const res = await fetch('/api/availability');
+                if (res.ok) {
+                    const data = await res.json();
+                    const badgeTitle = document.getElementById('status-text-title');
+                    const badgeSub = document.getElementById('status-text-sub');
+                    if (data && data.data && data.data[0]) {
+                        const total = data.data[0].interpreters_total || 1049;
+                        badgeTitle.textContent = 'Roster Active & Ready';
+                        badgeSub.textContent = total + ' Certified Interpreters';
+                    }
+                }
+            } catch (e) {
+                // Keep default high-availability badge
+            }
+        }
+        checkAvailability();
+
+        // Handle Dispatch Form Submission
+        document.getElementById('switchboard-dispatch-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('dispatch-btn');
+            const alertBox = document.getElementById('dispatch-alert');
+            const callType = document.querySelector('input[name="call_type"]:checked').value;
+            const refVal = document.getElementById('client-reference').value.trim() || 'MVHLSP Clinical Station';
+
+            btn.disabled = true;
+            btn.innerHTML = '<span>Securing Encrypted Channel...</span>';
+            alertBox.classList.remove('hidden', 'text-rose-400', 'bg-rose-950/40');
+            alertBox.classList.add('text-cyan-300', 'bg-cyan-950/40');
+            alertBox.textContent = 'Contacting switchboard and routing to on-demand Spanish interpreter...';
+
+            try {
+                const response = await fetch('/api/dispatch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        call_type: callType,
+                        client_name: refVal,
+                        notes: 'Dispatched via mvhlsp.site/connect'
+                    })
+                });
+
+                const data = await response.json();
+                if (!response.ok || !data.join_url) {
+                    throw new Error(data.error || 'Switchboard did not issue a join token.');
+                }
+
+                alertBox.classList.remove('text-cyan-300', 'bg-cyan-950/40');
+                alertBox.classList.add('text-emerald-300', 'bg-emerald-950/40');
+                alertBox.textContent = 'Interpreter connected! Launching encounter room...';
+
+                // Launch session in dedicated full-screen encounter window
+                const sessionWindow = window.open(data.join_url, 'MVHLSP_Clinical_Encounter', 'width=1100,height=800,menubar=no,toolbar=no,location=no,status=no');
+                if (!sessionWindow) {
+                    window.location.href = data.join_url;
+                }
+
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = '<span>Connect Interpreter Now</span> <span aria-hidden="true">→</span>';
+                    alertBox.classList.add('hidden');
+                }, 4000);
+
+            } catch (err) {
+                alertBox.classList.remove('text-cyan-300', 'bg-cyan-950/40');
+                alertBox.classList.add('text-rose-300', 'bg-rose-950/40');
+                alertBox.innerHTML = '<span>Connection Notice: ' + err.message + '</span><br><span class="text-[10px] mt-1 inline-block">Direct Telephone Backup Line: <a href="tel:+19153392353" class="underline font-bold text-white">(915) 339-2353</a></span>';
+                btn.disabled = false;
+                btn.innerHTML = '<span>Retry Connection</span> <span aria-hidden="true">→</span>';
+            }
+        });
+    </script>
 </body>
 </html>

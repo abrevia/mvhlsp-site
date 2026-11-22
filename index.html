@@ -405,9 +405,9 @@
                     <p class="text-slate-400 text-xs mb-3 leading-relaxed">Direct infrastructure access and operational portals:</p>
                     <ul class="space-y-2 text-xs">
                         <li>
-                            <a href="https://www.proz.com/remoto/b/mvhlsp" target="_blank" rel="noopener noreferrer" class="text-slate-300 hover:text-white transition inline-flex items-center gap-1.5">
+                            <a href="/connect" class="text-cyan-300 hover:text-white font-bold transition inline-flex items-center gap-1.5">
                                 <span class="text-[#48A6CC]">&rarr;</span>
-                                <span>Book an Interpreter</span>
+                                <span>Clinical Quick-Dial Switchboard (/connect)</span>
                             </a>
                         </li>
                         <li>
@@ -577,8 +577,8 @@
                             <p class="text-[11px] text-slate-500 mt-0.5">Launches an encrypted, browser-based clinical encounter with our specialized medical Spanish interpreters. No software downloads required.</p>
                         </div>
                     </div>
-                    <button type="button" onclick="launchInterpreterSession()" class="w-full mt-2 btn-pulse-hover bg-[#105C7C] hover:bg-[#156D93] text-white font-bold py-3 px-4 rounded-xl text-xs transition shadow-md shadow-[#105C7C]/20 flex items-center justify-center space-x-2 cursor-pointer">
-                        <span>Launch Secure Encounter Room</span>
+                    <button type="button" onclick="launchInterpreterSession('video', this)" class="w-full mt-2 btn-pulse-hover bg-[#105C7C] hover:bg-[#156D93] text-white font-bold py-3 px-4 rounded-xl text-xs transition shadow-md shadow-[#105C7C]/20 flex items-center justify-center space-x-2 cursor-pointer">
+                        <span>Launch Secure Encounter Room (Video VRI)</span>
                         <span>&rarr;</span>
                     </button>
                 </div>
@@ -597,10 +597,13 @@
                         <div class="text-[11px] text-slate-600 leading-normal">
                             Direct telephonic routing into our pool of 1,000+ medical Spanish interpreters. Billed strictly by the second ($1.48/min) with zero rounding up.
                         </div>
-                        <div class="pt-1">
-                            <button type="button" onclick="launchInterpreterSession()" class="btn-pulse-hover w-full inline-flex items-center justify-center space-x-2 bg-[#105C7C] hover:bg-[#156D93] text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-sm cursor-pointer">
-                                <span>Launch Audio &amp; Video Encounter Room &rarr;</span>
+                        <div class="pt-1 flex flex-col sm:flex-row gap-2">
+                            <button type="button" onclick="launchInterpreterSession('audio', this)" class="btn-pulse-hover flex-1 inline-flex items-center justify-center space-x-2 bg-[#105C7C] hover:bg-[#156D93] text-white font-bold py-2.5 px-3 rounded-xl text-xs transition shadow-sm cursor-pointer">
+                                <span>Instant Audio Relay &rarr;</span>
                             </button>
+                            <a href="/connect" class="inline-flex items-center justify-center text-center bg-white border border-[#105C7C] text-[#105C7C] hover:bg-cyan-50 font-bold py-2.5 px-3 rounded-xl text-xs transition">
+                                <span>Open Quick-Dial Card</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -879,9 +882,39 @@
         function closeDispatchModal() {
             document.getElementById('dispatch-modal').classList.add('hidden');
         }
-        function launchInterpreterSession() {
-            window.open('https://www.proz.com/remoto/b/mvhlsp/connect', '_blank', 'noopener,noreferrer');
-            closeDispatchModal();
+        async function launchInterpreterSession(callType = 'audio', triggerBtn = null) {
+            let originalContent = '';
+            if (triggerBtn) {
+                originalContent = triggerBtn.innerHTML;
+                triggerBtn.innerHTML = '<span>Connecting to Switchboard...</span>';
+                triggerBtn.disabled = true;
+            }
+
+            try {
+                const res = await fetch('/api/dispatch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        call_type: callType,
+                        client_name: 'MVHLSP Portal Client',
+                        notes: 'Dispatched via mvhlsp.site modal'
+                    })
+                });
+                const data = await res.json();
+                if (res.ok && data.join_url) {
+                    window.open(data.join_url, 'MVHLSP_Clinical_Encounter', 'width=1100,height=800,menubar=no,toolbar=no,location=no,status=no');
+                    closeDispatchModal();
+                } else {
+                    window.location.href = '/connect';
+                }
+            } catch (err) {
+                window.location.href = '/connect';
+            } finally {
+                if (triggerBtn) {
+                    triggerBtn.innerHTML = originalContent;
+                    triggerBtn.disabled = false;
+                }
+            }
         }
 
         // Terms Modal functions
