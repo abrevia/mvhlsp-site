@@ -118,7 +118,8 @@ export default {
           call_type: callType,
           client_name: clientName,
           notes: notes,
-          external_reference: extRef
+          external_reference: extRef,
+          test_call: body.test_call !== false // Spends admin-granted test allowance (free minutes)
         };
 
         const resp = await fetch('https://www.proz.com/remoto/api/v1/call-requests', {
