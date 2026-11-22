@@ -39,6 +39,9 @@ At MVHLSP (Mountain Valley Healthcare Language Service Provider), we operate on 
 We invite your clinical team to test an instant encounter on your next Spanish-speaking patient visit:
 👉 Launch Instant Clinical Encounter: https://mvhlsp.site/dashboard
 
+• Complimentary Trial Session:
+If your clinic would like to experience a complimentary clinical interpreting session before adding a payment method, simply reply to this email or message info@mvhlsp.site with your clinic name. Our executive office will set up your complimentary session directly.
+
 Would you be open to your front desk bookmarking our launch dashboard for your next Spanish encounter?
 
 Warm regards,
