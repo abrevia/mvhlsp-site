@@ -155,8 +155,12 @@ export default {
       const assetReq = new Request('https://mvhlsp.site/partner.html', request);
       return env.ASSETS.fetch(assetReq);
     }
-    if (path === '/quickdial' || path === '/connect') {
+    if (path === '/quickdial') {
       const assetReq = new Request('https://mvhlsp.site/quickdial.html', request);
+      return env.ASSETS.fetch(assetReq);
+    }
+    if (path === '/connect') {
+      const assetReq = new Request('https://mvhlsp.site/connect.html', request);
       return env.ASSETS.fetch(assetReq);
     }
 
