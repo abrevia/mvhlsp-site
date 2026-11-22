@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MVHLSP | Clinical Language Access Dashboard</title>
+    <title>MVHLSP | Spanish Medical Interpreting Services</title>
     <meta name="description" content="Dedicated clinical dashboard for healthcare providers. Instant on-demand Medical Spanish human interpretation (OPI & VRI). Dedicated switchboard for hospitals, clinics, and triage desks.">
     <link rel="icon" href="logo.jpg">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -41,8 +41,8 @@
                         <span class="text-base sm:text-lg font-black tracking-tight text-[#105C7C] block leading-none">
                             MVHLSP
                         </span>
-                        <span class="text-[9px] font-bold uppercase tracking-wider text-slate-500 block mt-0.5">
-                            Clinical Language Switchboard
+                        <span class="text-[9px] font-bold uppercase tracking-wider text-slate-600 block mt-0.5">
+                            Spanish Medical Interpreting Services
                         </span>
                     </div>
                 </a>
@@ -67,7 +67,7 @@
 
                 <!-- Clinical Desk Inquiries -->
                 <a href="mailto:info@mvhlsp.site" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-[#EEF6F9] hover:bg-[#C4DEE9]/50 border border-[#105C7C]/30 text-[#105C7C] rounded-lg text-xs font-black transition" title="Clinical Dispatch Desk Email">
-                    <span aria-hidden="true">✉</span>
+                    <svg class="w-3.5 h-3.5 text-slate-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                     <span>info@mvhlsp.site</span>
                 </a>
 
@@ -117,13 +117,13 @@
 
                     <!-- Clinical Support Desk -->
                     <a href="mailto:info@mvhlsp.site" class="hidden md:inline-flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 rounded-xl transition" title="Clinical Support Desk">
-                        <span class="text-cyan-400">✉</span>
+                        <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                         <span>Support: info@mvhlsp.site</span>
                     </a>
 
                     <!-- End Call Button -->
                     <button type="button" id="end-encounter-btn" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white text-xs sm:text-sm font-black uppercase tracking-wider rounded-xl shadow-lg transition flex items-center gap-1.5 cursor-pointer">
-                        <span>✕ End Encounter</span>
+                        <svg class="w-3.5 h-3.5 text-rose-300 shrink-0 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg> <span>End Encounter</span>
                     </button>
                 </div>
             </div>
@@ -148,9 +148,9 @@
             <!-- Clinical Security & Regulatory Micro-Bar -->
             <div class="bg-slate-950 px-4 py-2 border-t border-slate-800 text-[10px] text-slate-400 flex flex-wrap items-center justify-between gap-2 font-medium">
                 <div class="flex items-center gap-3">
-                    <span class="text-emerald-400 font-bold">✔ HIPAA 45 CFR § 164.504(e) Conduit</span>
-                    <span>✔ Zero-Data-Trace (ZDT) Transient Audio/Video</span>
-                    <span>✔ $1.48/min per-second exact billing</span>
+                    <span class="text-emerald-400 font-bold"><svg class="w-3.5 h-3.5 text-slate-500 shrink-0 inline-block align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>HIPAA 45 CFR § 164.504(e) Conduit</span>
+                    <span><svg class="w-3.5 h-3.5 text-slate-500 shrink-0 inline-block align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Zero-Data-Trace (ZDT) Transient Audio/Video</span>
+                    <span><svg class="w-3.5 h-3.5 text-slate-500 shrink-0 inline-block align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>$1.48/min per-second exact billing</span>
                 </div>
                 <div>
                     Hospital Support Desk: <a href="mailto:info@mvhlsp.site" class="text-cyan-400 underline font-bold">info@mvhlsp.site</a>
@@ -199,7 +199,7 @@
                                 <label class="cursor-pointer">
                                     <input type="radio" name="call_type" value="audio" checked class="peer sr-only">
                                     <div class="p-3.5 rounded-xl border-2 border-slate-200 bg-slate-50 peer-checked:border-[#105C7C] peer-checked:bg-[#EEF6F9] transition flex items-center gap-3">
-                                        <span class="text-2xl" aria-hidden="true">📞</span>
+                                        <div class="w-9 h-9 rounded-lg bg-slate-100 border border-slate-300 flex items-center justify-center shrink-0 mb-1"><svg class="w-5 h-5 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div>
                                         <div>
                                             <p class="text-xs sm:text-sm font-black text-slate-900 leading-tight">Audio (OPI)</p>
                                             <p class="text-[10px] text-slate-500 font-semibold mt-0.5">Immediate Voice Relay</p>
@@ -209,7 +209,7 @@
                                 <label class="cursor-pointer">
                                     <input type="radio" name="call_type" value="video" class="peer sr-only">
                                     <div class="p-3.5 rounded-xl border-2 border-slate-200 bg-slate-50 peer-checked:border-[#105C7C] peer-checked:bg-[#EEF6F9] transition flex items-center gap-3">
-                                        <span class="text-2xl" aria-hidden="true">📹</span>
+                                        <div class="w-9 h-9 rounded-lg bg-slate-100 border border-slate-300 flex items-center justify-center shrink-0 mb-1"><svg class="w-5 h-5 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg></div>
                                         <div>
                                             <p class="text-xs sm:text-sm font-black text-slate-900 leading-tight">Video Remote (VRI)</p>
                                             <p class="text-[10px] text-slate-500 font-semibold mt-0.5">Two-Way Visual & Spanish</p>
@@ -277,7 +277,7 @@
                 <section class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm" aria-label="Shift Encounter Log">
                     <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-3">
                         <div class="flex items-center gap-2">
-                            <span class="text-base" aria-hidden="true">📋</span>
+                            <svg class="w-4 h-4 text-slate-700 shrink-0 inline-block align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
                             <h2 class="text-xs font-black uppercase text-slate-800 tracking-wider">
                                 Today's Shift Encounter Log
                             </h2>
@@ -318,7 +318,7 @@
                 <section class="bg-white border-2 border-slate-300 rounded-2xl p-5 sm:p-6 shadow-sm" aria-label="Hospital Desk Phone Quick Reference">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center gap-2">
-                            <span>📞</span>
+                            <svg class="w-4 h-4 text-slate-700 shrink-0 inline-block align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                             <span>Hospital Desk Phone Access (OPI)</span>
                         </h2>
                         <span class="text-[10px] font-bold text-slate-500 uppercase bg-slate-100 px-2 py-0.5 rounded">
@@ -362,7 +362,7 @@
 
                     <div class="mt-4 pt-3 border-t border-slate-200 text-center no-print">
                         <button type="button" onclick="window.print()" class="text-xs font-bold text-slate-600 hover:text-slate-900 underline cursor-pointer">
-                            🖨 Print Front-Desk Phone Card
+                            <svg class="w-3.5 h-3.5 text-slate-600 shrink-0 inline-block align-middle mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4H7v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg><span>Print Front-Desk Phone Card</span>
                         </button>
                     </div>
                 </section>
@@ -381,9 +381,9 @@
                     </p>
 
                     <div class="pt-2 border-t border-[#C4DEE9]/60 flex flex-wrap items-center justify-between text-[11px] font-bold text-slate-600 gap-2">
-                        <span>✔ HIPAA 45 CFR § 164.504(e)</span>
-                        <span>✔ CMS Fraud, Waste &amp; Abuse</span>
-                        <span>✔ ACA Section 1557</span>
+                        <span><svg class="w-3.5 h-3.5 text-slate-500 shrink-0 inline-block align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>HIPAA 45 CFR § 164.504(e)</span>
+                        <span><svg class="w-3.5 h-3.5 text-slate-500 shrink-0 inline-block align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>CMS Fraud, Waste &amp; Abuse</span>
+                        <span><svg class="w-3.5 h-3.5 text-slate-500 shrink-0 inline-block align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>ACA Section 1557</span>
                     </div>
                 </section>
 
@@ -512,7 +512,11 @@
             } catch (err) {
                 alertBox.classList.remove('bg-cyan-50', 'text-cyan-800', 'border-cyan-200');
                 alertBox.classList.add('bg-rose-50', 'text-rose-800', 'border', 'border-rose-200');
-                alertBox.innerHTML = `<span>Notice: ${err.message}</span><br><span class="text-[11px] mt-1 inline-block">Clinical Support Desk Available: <a href="mailto:info@mvhlsp.site" class="underline font-bold text-rose-900">info@mvhlsp.site</a></span>`;
+                if (err.message && err.message.toLowerCase().includes('payment')) {
+                    alertBox.innerHTML = `<span>Notice: ${err.message}</span><br><span class="text-[11px] mt-2 block font-semibold text-slate-700">To unlock your included Remoto minutes, please add a payment method (debit/credit card) in your secure Remoto business settings: <a href="https://www.proz.com/remoto/user/dashboard/business" target="_blank" class="underline font-bold text-[#105C7C]">Open Remoto Payment Settings &rarr;</a></span><span class="text-[11px] mt-1 block text-slate-500">Need support? Contact <a href="mailto:info@mvhlsp.site" class="underline font-bold text-[#105C7C]">info@mvhlsp.site</a></span>`;
+                } else {
+                    alertBox.innerHTML = `<span>Notice: ${err.message}</span><br><span class="text-[11px] mt-1 inline-block text-slate-600">Clinical Support Desk: <a href="mailto:info@mvhlsp.site" class="underline font-bold text-[#105C7C]">info@mvhlsp.site</a></span>`;
+                }
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = '<span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span> <span>Connect Medical Spanish Interpreter Now</span> <span aria-hidden="true">&rarr;</span>';
