@@ -273,41 +273,7 @@
                     </form>
                 </section>
 
-                <!-- Shift Encounter Log (Saved locally in session for shift handoffs) -->
-                <section class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm" aria-label="Shift Encounter Log">
-                    <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-3">
-                        <div class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-slate-700 shrink-0 inline-block align-middle mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
-                            <h2 class="text-xs font-black uppercase text-slate-800 tracking-wider">
-                                Today's Shift Encounter Log
-                            </h2>
-                        </div>
-                        <button type="button" onclick="clearShiftLog()" class="text-[10px] text-slate-500 hover:text-rose-600 font-bold transition cursor-pointer">
-                            Clear Log
-                        </button>
-                    </div>
-
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs">
-                            <thead>
-                                <tr class="text-[10px] uppercase font-black text-slate-400 border-b border-slate-100">
-                                    <th class="pb-2">Time</th>
-                                    <th class="pb-2">Reference</th>
-                                    <th class="pb-2">Modality</th>
-                                    <th class="pb-2">Duration</th>
-                                    <th class="pb-2 text-right">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="encounter-log-body" class="divide-y divide-slate-100 font-medium text-slate-700">
-                                <tr id="empty-log-row">
-                                    <td colspan="5" class="py-4 text-center text-slate-400 text-xs">
-                                        No encounters logged yet during this shift.
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
+                
 
             </div>
 
