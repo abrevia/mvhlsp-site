@@ -72,12 +72,45 @@
                 <a href="/" class="text-xs font-bold text-slate-600 hover:text-[#105C7C] transition px-2 py-1">
                     Agency Portal &rarr;
                 </a>
+
+                <!-- Special Executive Admin Button (Upper Right Side) -->
+                <button type="button" id="admin-header-btn" onclick="handleAdminHeaderClick()" class="px-3 py-1.5 bg-slate-900 hover:bg-[#105C7C] text-white border border-slate-700 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-xs" title="Executive Admin Console">
+                    <svg class="w-3.5 h-3.5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    <span id="admin-header-label">Admin</span>
+                </button>
             </div>
         </div>
     </header>
 
     <!-- Main Clinical Dashboard Body -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
+
+        <!-- EXECUTIVE ADMIN ACTIVE BANNER -->
+        <div id="admin-active-banner" class="hidden p-4 bg-slate-900 border-2 border-emerald-500 rounded-2xl text-white shadow-xl">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div class="flex items-center gap-2.5">
+                    <span class="relative flex h-3 w-3">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                    </span>
+                    <div>
+                        <div class="text-xs sm:text-sm font-bold flex items-center gap-2">
+                            <span>Executive Admin Mode Active</span>
+                            <span class="text-[10px] px-2 py-0.5 bg-emerald-950 text-emerald-300 border border-emerald-500/50 rounded font-bold uppercase">Free Minutes Unlocked</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 mt-0.5">Captain Alex: Dispatches consume Remoto free test allowance without checking or charging a card.</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="openAdminConsoleModal()" class="px-3 py-1.5 bg-[#105C7C] hover:bg-[#156D93] text-white rounded-lg text-xs font-bold transition cursor-pointer">
+                        Admin Switchboard &rarr;
+                    </button>
+                    <button type="button" onclick="adminLogout()" class="px-3 py-1.5 bg-slate-800 hover:bg-rose-900/60 text-slate-300 hover:text-rose-200 border border-slate-700 rounded-lg text-xs font-bold transition cursor-pointer">
+                        Lock / Log Out
+                    </button>
+                </div>
+            </div>
+        </div>
 
         <!-- ================================================================= -->
         <!-- ACTIVE ENCOUNTER SCREEN (IN-PAGE EMBEDDED STAGE - ACTIVATES ON DISPATCH) -->
@@ -120,8 +153,13 @@
                     </a>
 
                     <!-- End Call Button -->
-                    <button type="button" id="end-encounter-btn" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white text-xs sm:text-sm font-black uppercase tracking-wider rounded-xl shadow-lg transition flex items-center gap-1.5 cursor-pointer">
+                    <button type="button" id="end-encounter-btn" class="px-3.5 py-2 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white text-xs sm:text-sm font-black uppercase tracking-wider rounded-xl shadow-lg transition flex items-center gap-1.5 cursor-pointer">
                         <svg class="w-3.5 h-3.5 text-rose-300 shrink-0 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg> <span>End Encounter</span>
+                    </button>
+
+                    <!-- Dedicated Close Window Button -->
+                    <button type="button" id="close-encounter-window-btn" onclick="forceCloseEncounterWindow()" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 hover:text-white text-xs sm:text-sm font-bold uppercase tracking-wider rounded-xl border border-slate-700 hover:border-slate-500 shadow transition flex items-center gap-1.5 cursor-pointer" title="Close Window & Return to Dashboard">
+                        <svg class="w-3.5 h-3.5 text-slate-400 shrink-0 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg> <span>Close Window</span>
                     </button>
                 </div>
             </div>
@@ -336,6 +374,129 @@
 
     </main>
 
+    <!-- ================================================================= -->
+    <!-- EXECUTIVE ADMIN MODAL (LOGIN & COMMAND SWITCHBOARD) -->
+    <!-- ================================================================= -->
+    <div id="admin-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="relative bg-white rounded-2xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            
+            <!-- Modal Header -->
+            <div class="bg-slate-900 px-6 py-4 flex items-center justify-between text-white border-b border-slate-800">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                    <h3 class="text-sm sm:text-base font-extrabold tracking-tight">Executive Admin Switchboard</h3>
+                </div>
+                <button type="button" onclick="closeAdminModal()" class="text-slate-400 hover:text-white transition cursor-pointer p-1 rounded-lg hover:bg-slate-800" title="Close">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <!-- Modal Body: Unauthenticated Login Form -->
+            <div id="admin-login-view" class="p-6 space-y-4">
+                <div class="text-xs text-slate-600 leading-relaxed">
+                    Enter executive credentials to unlock <strong>admin-granted free minutes test routing</strong> and direct switchboard communications with interpreters and clients.
+                </div>
+
+                <form id="admin-login-form" onsubmit="handleAdminLogin(event)" class="space-y-3.5">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Admin User ID</label>
+                        <input type="text" id="admin-user-id" value="alex@mvhlsp.site" readonly class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-semibold text-slate-700 cursor-not-allowed">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Executive Access Key</label>
+                        <input type="password" id="admin-access-key" placeholder="Enter Access Key" required class="w-full px-3 py-2 bg-white border border-slate-300 focus:border-[#105C7C] focus:ring-2 focus:ring-[#105C7C]/20 rounded-xl text-xs font-semibold text-slate-900 outline-none transition">
+                    </div>
+                    
+                    <div id="admin-login-error" class="hidden p-2.5 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl font-medium"></div>
+
+                    <div class="pt-2 flex items-center justify-end gap-2.5">
+                        <button type="button" onclick="closeAdminModal()" class="px-4 py-2 text-xs font-bold text-slate-600 hover:text-slate-900 transition">
+                            Cancel
+                        </button>
+                        <button type="submit" id="admin-login-submit" class="px-5 py-2.5 bg-[#105C7C] hover:bg-[#156D93] active:scale-95 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition shadow-md shadow-[#105C7C]/20 cursor-pointer">
+                            Authenticate & Unlock
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal Body: Authenticated Executive Console -->
+            <div id="admin-console-view" class="hidden p-6 space-y-5">
+                <div class="bg-emerald-50 border border-emerald-200 p-3.5 rounded-xl flex items-center justify-between">
+                    <div>
+                        <div class="text-xs font-bold text-emerald-900 flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+                            <span>Captain Alex (Managing Director)</span>
+                        </div>
+                        <div class="text-[11px] text-emerald-700 mt-0.5">Agency: <strong>mvhlsp</strong> • Remoto Carrier ID: <code class="font-mono text-[10px]">6aedbc5e989cef6a80b751ff</code></div>
+                    </div>
+                    <span class="text-[10px] uppercase font-black px-2 py-0.5 bg-emerald-200 text-emerald-800 rounded">Active</span>
+                </div>
+
+                <!-- Test Minutes Routing Option -->
+                <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-xl space-y-2">
+                    <div class="flex items-center justify-between">
+                        <div class="text-xs font-bold text-slate-800">Free Minutes Test Routing</div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="admin-test-mode-toggle" checked onchange="toggleAdminTestMode(this)" class="sr-only peer">
+                            <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
+                        </label>
+                    </div>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">
+                        When enabled, dispatches consume your admin-granted free test allowance without checking or charging a credit card.
+                    </p>
+                </div>
+
+                <!-- Direct Communications with Interpreters & Clients -->
+                <div class="space-y-2.5">
+                    <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Remoto Switchboard Communications</div>
+                    
+                    <a href="https://www.proz.com/remoto/user/dashboard/business/6aedbc5e989cef6a80b751ff/interpreters" target="_blank" class="block p-3 bg-white hover:bg-slate-50 border border-slate-200 hover:border-[#105C7C] rounded-xl transition group">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-[#105C7C]"></span>
+                                <span class="text-xs font-bold text-slate-900 group-hover:text-[#105C7C]">Communicate with Roster Interpreters &rarr;</span>
+                            </div>
+                            <span class="text-[10px] text-slate-400">Remoto Roster</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 mt-1">Review active interpreters (Valentina, Pilar, Gonzalo, Teresa), check online status, and message linguists.</p>
+                    </a>
+
+                    <a href="https://www.proz.com/remoto/user/dashboard/business/6aedbc5e989cef6a80b751ff/calls" target="_blank" class="block p-3 bg-white hover:bg-slate-50 border border-slate-200 hover:border-[#105C7C] rounded-xl transition group">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-cyan-600"></span>
+                                <span class="text-xs font-bold text-slate-900 group-hover:text-[#105C7C]">Customer Encounters & Live Call Monitor &rarr;</span>
+                            </div>
+                            <span class="text-[10px] text-slate-400">Live Calls</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 mt-1">Inspect ongoing patient calls, view call logs, caller references, and duration reports.</p>
+                    </a>
+
+                    <div class="grid grid-cols-2 gap-2 pt-1">
+                        <a href="https://www.proz.com/remoto/user/portal-settings" target="_blank" class="p-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl text-center text-xs font-bold text-slate-700 hover:text-slate-900 transition">
+                            Portal Settings &rarr;
+                        </a>
+                        <a href="https://www.proz.com/remoto/b/mvhlsp/connect" target="_blank" class="p-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl text-center text-xs font-bold text-slate-700 hover:text-slate-900 transition">
+                            Card & Billing &rarr;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Footer Actions -->
+                <div class="pt-2 border-t border-slate-200 flex items-center justify-between">
+                    <button type="button" onclick="adminLogout()" class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-xl text-xs font-bold transition cursor-pointer">
+                        Lock / Log Out
+                    </button>
+                    <button type="button" onclick="closeAdminModal()" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition cursor-pointer">
+                        Return to Dashboard
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 font-semibold no-print">
         <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
@@ -361,6 +522,146 @@
         let activeModality = 'audio';
         let activeReference = '';
 
+        // Executive Admin State
+        const ADMIN_STORAGE_KEY = 'mvhlsp_admin_key';
+        let isAdminAuthenticated = false;
+        let adminTestModeEnabled = true;
+
+        function getStoredAdminKey() {
+            return localStorage.getItem(ADMIN_STORAGE_KEY) || sessionStorage.getItem(ADMIN_STORAGE_KEY) || '';
+        }
+
+        function checkAdminAuthOnLoad() {
+            const key = getStoredAdminKey();
+            if (key) {
+                isAdminAuthenticated = true;
+                updateAdminUIState(true);
+            } else {
+                isAdminAuthenticated = false;
+                updateAdminUIState(false);
+            }
+        }
+
+        function updateAdminUIState(isAuth) {
+            const btnLabel = document.getElementById('admin-header-label');
+            const headerBtn = document.getElementById('admin-header-btn');
+            const banner = document.getElementById('admin-active-banner');
+            const loginView = document.getElementById('admin-login-view');
+            const consoleView = document.getElementById('admin-console-view');
+
+            if (isAuth) {
+                if (btnLabel) btnLabel.textContent = 'Admin (Active)';
+                if (headerBtn) {
+                    headerBtn.className = 'px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white border border-emerald-500 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-xs';
+                }
+                if (banner) banner.classList.remove('hidden');
+                if (loginView) loginView.classList.add('hidden');
+                if (consoleView) consoleView.classList.remove('hidden');
+            } else {
+                if (btnLabel) btnLabel.textContent = 'Admin';
+                if (headerBtn) {
+                    headerBtn.className = 'px-3 py-1.5 bg-slate-900 hover:bg-[#105C7C] text-white border border-slate-700 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-xs';
+                }
+                if (banner) banner.classList.add('hidden');
+                if (loginView) loginView.classList.remove('hidden');
+                if (consoleView) consoleView.classList.add('hidden');
+            }
+        }
+
+        function handleAdminHeaderClick() {
+            const modal = document.getElementById('admin-modal');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function openAdminConsoleModal() {
+            const modal = document.getElementById('admin-modal');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeAdminModal() {
+            const modal = document.getElementById('admin-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        async function handleAdminLogin(e) {
+            e.preventDefault();
+            const keyInput = document.getElementById('admin-access-key');
+            const errBox = document.getElementById('admin-login-error');
+            const submitBtn = document.getElementById('admin-login-submit');
+            const keyVal = keyInput.value.trim();
+
+            if (!keyVal) return;
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Verifying...';
+            if (errBox) errBox.classList.add('hidden');
+
+            try {
+                const res = await fetch('/api/admin/verify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ admin_key: keyVal })
+                });
+
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    localStorage.setItem(ADMIN_STORAGE_KEY, keyVal);
+                    isAdminAuthenticated = true;
+                    updateAdminUIState(true);
+                    keyInput.value = '';
+                } else {
+                    throw new Error(data.error || 'Invalid Admin Access Key');
+                }
+            } catch (err) {
+                if (errBox) {
+                    errBox.textContent = err.message || 'Authentication failed. Please verify executive access key.';
+                    errBox.classList.remove('hidden');
+                }
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Authenticate & Unlock';
+            }
+        }
+
+        function toggleAdminTestMode(chk) {
+            adminTestModeEnabled = chk.checked;
+        }
+
+        function adminLogout() {
+            localStorage.removeItem(ADMIN_STORAGE_KEY);
+            sessionStorage.removeItem(ADMIN_STORAGE_KEY);
+            isAdminAuthenticated = false;
+            updateAdminUIState(false);
+            closeAdminModal();
+        }
+
+        // Close encounter window immediately without browser prompt
+        function forceCloseEncounterWindow() {
+            if (callTimerInterval) {
+                clearInterval(callTimerInterval);
+                callTimerInterval = null;
+            }
+            const screen = document.getElementById('encounter-active-screen');
+            const iframe = document.getElementById('encounter-iframe');
+            if (iframe) iframe.src = 'about:blank';
+            if (screen) screen.classList.add('hidden');
+            
+            const timerDisplay = document.getElementById('active-timer-display');
+            if (timerDisplay) timerDisplay.textContent = '00:00:00';
+            
+            const submitBtn = document.getElementById('dashboard-submit-btn');
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span> <span>Connect Medical Spanish Interpreter Now</span> <span aria-hidden="true">&rarr;</span>';
+            }
+            
+            const alertBox = document.getElementById('dashboard-dispatch-alert');
+            if (alertBox) alertBox.classList.add('hidden');
+
+            const form = document.getElementById('dashboard-dispatch-form');
+            if (form) form.scrollIntoView({ behavior: 'smooth' });
+        }
+
         // 1. Availability check on page mount
         async function fetchLiveAvailability() {
             try {
@@ -383,9 +684,15 @@
         fetchLiveAvailability();
         setInterval(fetchLiveAvailability, 30000);
 
-        // 2. URL Parameter pre-selection (e.g., /dashboard?type=video)
+        // 2. URL Parameter pre-selection (e.g., /dashboard?type=video) & Admin auth check
         window.addEventListener('DOMContentLoaded', () => {
+            checkAdminAuthOnLoad();
+
             const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('admin') === 'true' || window.location.hash === '#admin') {
+                handleAdminHeaderClick();
+            }
+
             const typeParam = urlParams.get('type');
             if (typeParam === 'video') {
                 const videoRadio = document.querySelector('input[name="call_type"][value="video"]');
@@ -394,7 +701,13 @@
                 const audioRadio = document.querySelector('input[name="call_type"][value="audio"]');
                 if (audioRadio) audioRadio.checked = true;
             }
-            });
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeAdminModal();
+            }
+        });
 
         // 3. Form Dispatch Handler
         document.getElementById('dashboard-dispatch-form').addEventListener('submit', async function(e) {
@@ -415,16 +728,23 @@
             alertBox.classList.add('bg-cyan-50', 'text-cyan-800', 'border', 'border-cyan-200');
             alertBox.textContent = 'Allocating encrypted channel to frontline Spanish medical interpreter...';
 
+            const adminKey = getStoredAdminKey();
+            const headers = { 'Content-Type': 'application/json' };
+            const useAdminTestMinutes = Boolean(isAdminAuthenticated && adminTestModeEnabled && adminKey);
+            if (useAdminTestMinutes) {
+                headers['x-admin-key'] = adminKey;
+            }
+
             try {
                 const response = await fetch('/api/dispatch', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: headers,
                     body: JSON.stringify({
                         call_type: callType,
                         client_name: refVal,
                         notes: `Department: ${department} • Dispatched from MVHLSP Clinical Dashboard`,
                         external_reference: `MV-${Date.now()}`,
-                        test_call: true
+                        test_call: useAdminTestMinutes
                     })
                 });
 
@@ -461,7 +781,6 @@
             const screen = document.getElementById('encounter-active-screen');
             const iframe = document.getElementById('encounter-iframe');
             const overlay = document.getElementById('iframe-loading-overlay');
-            const consoleContainer = document.getElementById('dispatch-console-container');
             const badge = document.getElementById('active-modality-badge');
             const refText = document.getElementById('active-ref-text');
             const sessId = document.getElementById('active-session-id');
@@ -527,8 +846,6 @@
 
         function concludeEncounter() {
             const finalDuration = stopTimer();
-            const screen = document.getElementById('encounter-active-screen');
-            const iframe = document.getElementById('encounter-iframe');
 
             // Log encounter locally
             addEncounterToLog({
@@ -539,14 +856,7 @@
                 duration: finalDuration
             });
 
-            // Reset iframe and hide active screen
-            iframe.src = 'about:blank';
-            screen.classList.add('hidden');
-
-            // Reset header timer
-            document.getElementById('active-timer-display').textContent = '00:00:00';
-            
-            // Re-render log
+            forceCloseEncounterWindow();
             alert(`Clinical encounter concluded.\nTotal Duration: ${finalDuration}\nSession logged into Remoto carrier report.`);
         }
 

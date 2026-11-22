@@ -19,7 +19,7 @@ export default {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-admin-key',
           'Access-Control-Max-Age': '86400',
         }
       });
@@ -93,7 +93,43 @@ export default {
       }
     }
 
-    // API Route 2: On-Demand Call Dispatch Bridge
+    // API Route 2: Admin Credential Verification
+    if (path === '/api/admin/verify' && request.method === 'POST') {
+      try {
+        const body = await request.json().catch(() => ({}));
+        const inputKey = (body.admin_key || '').toString().trim();
+        const expectedKey = (env.ADMIN_KEY || 'MVHLSP-Admin-2026!').toString().trim();
+
+        if (inputKey && inputKey === expectedKey) {
+          return new Response(JSON.stringify({
+            success: true,
+            user: 'Captain Alex',
+            title: 'Managing Director & Founder',
+            role: 'executive_admin',
+            business_id: env.REMOTO_BUSINESS_ID || '6aedbc5e989cef6a80b751ff',
+            slug: env.REMOTO_SLUG || 'mvhlsp'
+          }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+          });
+        } else {
+          return new Response(JSON.stringify({
+            success: false,
+            error: 'Invalid Executive Admin Key'
+          }), {
+            status: 401,
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+          });
+        }
+      } catch (err) {
+        return new Response(JSON.stringify({ error: err.message }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+        });
+      }
+    }
+
+    // API Route 3: On-Demand Call Dispatch Bridge
     if (path === '/api/dispatch' && request.method === 'POST') {
       const apiKey = env.REMOTO_API_KEY;
       if (!apiKey) {
@@ -113,13 +149,23 @@ export default {
         const notes = (body.notes || 'On-demand dispatch from mvhlsp.site/dashboard').toString().trim().slice(0, 2000);
         const extRef = (body.external_reference || `MV-${Date.now()}`).toString().trim().slice(0, 64);
 
+        // Security gate for free test allowance:
+        // Only granted if authenticated with the executive admin key.
+        const adminHeader = request.headers.get('x-admin-key');
+        const adminKey = (adminHeader || body.admin_key || '').toString().trim();
+        const expectedAdminKey = (env.ADMIN_KEY || 'MVHLSP-Admin-2026!').toString().trim();
+        const isAdmin = Boolean(adminKey && adminKey === expectedAdminKey);
+
+        // test_call: true consumes admin-granted free test minutes. Public visitors CANNOT spend free minutes.
+        const isTestCall = isAdmin && (body.test_call === true);
+
         const payload = {
           language_pair: { source: 'eng', target: 'spa' },
           call_type: callType,
           client_name: clientName,
           notes: notes,
           external_reference: extRef,
-          test_call: body.test_call !== false // Spends admin-granted test allowance (free minutes)
+          test_call: isTestCall
         };
 
         const resp = await fetch('https://www.proz.com/remoto/api/v1/call-requests', {
