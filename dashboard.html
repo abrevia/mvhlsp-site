@@ -403,8 +403,7 @@
                 const audioRadio = document.querySelector('input[name="call_type"][value="audio"]');
                 if (audioRadio) audioRadio.checked = true;
             }
-            renderShiftLog();
-        });
+            });
 
         // 3. Form Dispatch Handler
         document.getElementById('dashboard-dispatch-form').addEventListener('submit', async function(e) {
@@ -556,63 +555,9 @@
             document.getElementById('active-timer-display').textContent = '00:00:00';
             
             // Re-render log
-            renderShiftLog();
-
-            alert(`Clinical encounter concluded.\nTotal Duration: ${finalDuration}\nLogged into Shift History.`);
+            alert(`Clinical encounter concluded.\nTotal Duration: ${finalDuration}\nSession logged into Remoto carrier report.`);
         }
 
-        // 7. Shift Encounter Log Functions
-        function getShiftLog() {
-            try {
-                return JSON.parse(sessionStorage.getItem('mvhlsp_shift_log') || '[]');
-            } catch(e) {
-                return [];
-            }
-        }
-
-        function addEncounterToLog(entry) {
-            const log = getShiftLog();
-            log.unshift(entry);
-            sessionStorage.setItem('mvhlsp_shift_log', JSON.stringify(log));
-        }
-
-        function clearShiftLog() {
-            if (confirm('Clear the local shift encounter log?')) {
-                sessionStorage.removeItem('mvhlsp_shift_log');
-                renderShiftLog();
-            }
-        }
-
-        function renderShiftLog() {
-            const tbody = document.getElementById('encounter-log-body');
-            const log = getShiftLog();
-            if (!tbody) return;
-
-            if (log.length === 0) {
-                tbody.innerHTML = `
-                    <tr id="empty-log-row">
-                        <td colspan="5" class="py-4 text-center text-slate-400 text-xs">
-                            No encounters logged yet during this shift.
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-
-            tbody.innerHTML = log.map(entry => `
-                <tr class="hover:bg-slate-50 transition">
-                    <td class="py-2.5 font-bold text-slate-800">${entry.time}</td>
-                    <td class="py-2.5 text-slate-700 font-semibold">${entry.ref}</td>
-                    <td class="py-2.5">
-                        <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase ${entry.modality === 'VIDEO' ? 'bg-cyan-100 text-cyan-800' : 'bg-emerald-100 text-emerald-800'}">
-                            ${entry.modality}
-                        </span>
-                    </td>
-                    <td class="py-2.5 font-mono font-bold text-slate-800">${entry.duration}</td>
-                    <td class="py-2.5 text-right font-bold text-emerald-700">Completed</td>
-                </tr>
-            `).join('');
-        }
-    </script>
+        </script>
 </body>
 </html>
