@@ -293,6 +293,20 @@
                             </select>
                         </div>
 
+                                                <!-- Standby Active & Billing Safeguard Reassurance Card -->
+                        <div class="p-4 bg-gradient-to-r from-slate-50 to-[#EEF6F9] border border-[#C4DEE9] rounded-xl space-y-2 text-xs">
+                            <div class="flex items-center justify-between text-[11px] font-bold">
+                                <span class="flex items-center gap-1.5 text-emerald-700">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    <span>Switchboard Standby Active • Direct Dispatch</span>
+                                </span>
+                                <span class="text-slate-600 font-mono text-[10px] bg-white px-2 py-0.5 rounded border border-slate-200">$1.48 / min exact</span>
+                            </div>
+                            <div class="text-slate-600 leading-relaxed text-[11px]">
+                                <strong>Zero Upfront Charges:</strong> Card authorization is $0.00. You are never billed until a certified medical Spanish interpreter accepts the call and live interpretation begins. Metered strictly by the second with zero retainers.
+                            </div>
+                        </div>
+
                         <!-- Primary Connect Button -->
                         <button 
                             type="submit" 
@@ -763,11 +777,30 @@
                 launchActiveEncounter(data.join_url);
 
             } catch (err) {
-                alertBox.classList.remove('bg-cyan-50', 'text-cyan-800', 'border-cyan-200');
-                alertBox.classList.add('bg-rose-50', 'text-rose-800', 'border', 'border-rose-200');
-                if (err.message && err.message.toLowerCase().includes('payment')) {
-                    alertBox.innerHTML = `<span>Notice: ${err.message}</span><br><span class="text-[11px] mt-2 block font-semibold text-slate-700">Please add a payment method (debit/credit card) in the secure business settings: <a href="https://www.proz.com/remoto/b/mvhlsp/connect" target="_blank" class="underline font-bold text-[#105C7C]">Payment Settings &rarr;</a></span><span class="text-[11px] mt-1 block text-slate-500">Need support? Contact <a href="mailto:info@mvhlsp.site" class="underline font-bold text-[#105C7C]">info@mvhlsp.site</a></span>`;
+                alertBox.classList.remove('bg-cyan-50', 'text-cyan-800', 'border-cyan-200', 'bg-rose-50', 'text-rose-800', 'border-rose-200');
+                const errMsg = (err.message || '').toLowerCase();
+                const isPaymentNeeded = errMsg.includes('payment') || errMsg.includes('card') || errMsg.includes('balance') || errMsg.includes('credit') || errMsg.includes('invoice');
+
+                if (isPaymentNeeded) {
+                    // Trigger cordial Standby Active reassurance modal
+                    openStandbyActiveModal();
+                    alertBox.classList.add('bg-cyan-50', 'text-[#105C7C]', 'border', 'border-cyan-200');
+                    alertBox.innerHTML = `
+                        <div class="flex items-center justify-between text-left gap-2">
+                            <div>
+                                <span class="font-bold flex items-center gap-1.5 text-emerald-700">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    <span>Standby Active:</span> Channel Ready.
+                                </span>
+                                <span class="text-[11px] text-slate-600 block mt-0.5">Please kindly add a payment method to connect with your interpreter. Zero upfront fee.</span>
+                            </div>
+                            <button type="button" onclick="openStandbyActiveModal()" class="shrink-0 px-3 py-1.5 rounded-lg bg-[#0F2942] hover:bg-[#105C7C] text-white text-[11px] font-bold cursor-pointer transition">
+                                Complete Setup &rarr;
+                            </button>
+                        </div>
+                    `;
                 } else {
+                    alertBox.classList.add('bg-rose-50', 'text-rose-800', 'border', 'border-rose-200');
                     alertBox.innerHTML = `<span>Notice: ${err.message}</span><br><span class="text-[11px] mt-1 inline-block text-slate-600">Clinical Support Desk: <a href="mailto:info@mvhlsp.site" class="underline font-bold text-[#105C7C]">info@mvhlsp.site</a></span>`;
                 }
             } finally {
@@ -775,6 +808,16 @@
                 btn.innerHTML = '<span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span> <span>Connect Medical Spanish Interpreter Now</span> <span aria-hidden="true">&rarr;</span>';
             }
         });
+
+        
+        function openStandbyActiveModal() {
+            const modal = document.getElementById('standby-active-modal');
+            if (modal) modal.classList.remove('hidden');
+        }
+        function closeStandbyActiveModal() {
+            const modal = document.getElementById('standby-active-modal');
+            if (modal) modal.classList.add('hidden');
+        }
 
         // 4. In-Page Encounter Launcher
         function launchActiveEncounter(joinUrl) {
@@ -861,5 +904,60 @@
         }
 
         </script>
+    <!-- Standby Active Cordial Modal -->
+    <div id="standby-active-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs transition-opacity duration-200">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative animate-in fade-in zoom-in-95 duration-200">
+            <!-- Close Button -->
+            <button type="button" onclick="closeStandbyActiveModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100 transition cursor-pointer" aria-label="Close modal">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <!-- Status Indicator -->
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold mb-4">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                <span>Encounter Channel Initialized • Standby Active</span>
+            </div>
+
+            <h3 class="text-lg sm:text-xl font-black text-slate-900 mb-2">
+                Kindly Add a Payment Method to Connect
+            </h3>
+
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-5">
+                Our certified medical Spanish interpreters are standing by. To initiate live encrypted audio/video telemetry, please add your preferred payment method to your Remoto account.
+            </p>
+
+            <!-- Transparent Billing Reassurance Points -->
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2.5 mb-6 text-xs text-slate-700">
+                <div class="flex items-start gap-2">
+                    <span class="text-emerald-600 font-bold mt-0.5">&check;</span>
+                    <span><strong>$0 Upfront Authorization:</strong> Nothing is charged today. No subscription, retainer, or monthly fee.</span>
+                </div>
+                <div class="flex items-start gap-2">
+                    <span class="text-emerald-600 font-bold mt-0.5">&check;</span>
+                    <span><strong>Strict Per-Second Metering:</strong> Billing only starts when a human interpreter accepts and speaks ($1.48/min).</span>
+                </div>
+                <div class="flex items-start gap-2">
+                    <span class="text-emerald-600 font-bold mt-0.5">&check;</span>
+                    <span><strong>100% HIPAA Compliant:</strong> Zero-Data-Trace audio/video streams with enterprise-grade security.</span>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row items-center gap-3">
+                <a href="https://www.proz.com/remoto/b/mvhlsp/connect" target="_blank" class="w-full sm:flex-1 py-3.5 px-5 rounded-xl bg-[#0F2942] hover:bg-[#105C7C] text-white font-bold text-xs uppercase tracking-wider text-center shadow-md shadow-[#0F2942]/20 transition cursor-pointer flex items-center justify-center gap-2">
+                    <span>Add Payment Method</span>
+                    <span>&rarr;</span>
+                </a>
+                <button type="button" onclick="closeStandbyActiveModal()" class="w-full sm:w-auto py-3.5 px-5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition cursor-pointer">
+                    Return to Dispatch
+                </button>
+            </div>
+
+            <div class="mt-4 text-center">
+                <span class="text-[11px] text-slate-400">Clinical Support Desk: <a href="mailto:info@mvhlsp.site" class="text-[#105C7C] font-semibold hover:underline">info@mvhlsp.site</a></span>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
